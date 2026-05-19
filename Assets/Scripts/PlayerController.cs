@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -13,10 +13,10 @@ public class PlayerController : MonoBehaviour
     bool moveRight;
     bool isGround;
     bool isJump;
+    bool isTouched;
 
 
     float horizontalMove;
-    float prevY;
     public LayerMask layerMask;
     public float movespeed;
     public float jumpForce;
@@ -31,13 +31,16 @@ public class PlayerController : MonoBehaviour
         moveLeft = false;
         moveRight = false;
         isJump = false;
+        isTouched = false;
     }
 
-    #region ÀÌµ¿ ¹× ¹öÆ° »ö»ó º¯°æ ±¸Çö
+    #region ì´ë™ ë° ë²„íŠ¼ ìƒ‰ìƒ ë³€ê²½ êµ¬í˜„
     public void PushLeftBtn()
     {
         moveLeft = true;
         sprite.flipX = true;
+        isTouched = true;
+        moveRight = false;
         anim.SetBool("isRun", true);
 
         SetButtonAlpha(rightBtn, 0.3f);
@@ -46,27 +49,54 @@ public class PlayerController : MonoBehaviour
 
     public void UnPushLeftBtn()
     {
-        moveLeft = false;
-        sprite.flipX = true;
-        anim.SetBool("isRun", false);
+        isTouched = false;
+        StopMove();
+    }
 
-        SetButtonAlpha(rightBtn, 1f);
-        SetButtonAlpha(leftBtn, 1f);
+    public void ExitLeftBtn()
+    {
+        StopMove();
+    }
+
+    public void EnterLeftBtn()
+    {
+        if (!isTouched) return;
+        PushLeftBtn();
     }
 
     public void PushRightBtn()
     {
         anim.SetBool("isRun", true);
         moveRight = true;
+        sprite.flipX = false;
+        isTouched = true;
+        moveLeft = false;
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 0.3f);
-        sprite.flipX = false;
     }
 
     public void UnPushRightBtn()
     {
+       isTouched=false;
+        StopMove();
+    }
+
+    public void ExitRightBtn()
+    {
+        StopMove();
+    }
+
+    public void EnterRightBtn()
+    {
+        if (!isTouched) return;
+        PushRightBtn();
+    }
+
+    void StopMove()
+    {
         anim.SetBool("isRun", false);
         moveRight = false;
+        moveLeft = false;
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 1f);
     }
@@ -79,7 +109,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Á¡ÇÁ
+    #region ì í”„
     public void Jump()
     {
         if (isGround && !isJump)
@@ -97,11 +127,11 @@ public class PlayerController : MonoBehaviour
 
     void MovementPlayer()
     {
-        if (moveLeft)
+        if (moveLeft && !moveRight)
         {
             horizontalMove = -movespeed;
         }
-        else if (moveRight)
+        else if (moveRight && !moveLeft)
         {
             horizontalMove = movespeed;
         }
@@ -114,10 +144,10 @@ public class PlayerController : MonoBehaviour
     {
         rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
 
-        bool wasGround = isGround; // Ãß°¡
+        bool wasGround = isGround; // ì¶”ê°€
         isGround = Physics2D.Raycast(transform.position, Vector2.down, boxcollider.bounds.extents.y + 0.1f, layerMask);
 
-        if (isJump) // isJumpÀÏ ¶§¸¸ ¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ
+        if (isJump) // isJumpì¼ ë•Œë§Œ ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½
         {
             if (rigid.linearVelocity.y > 0)
             {
@@ -128,13 +158,11 @@ public class PlayerController : MonoBehaviour
                 anim.SetInteger("isJump", 2);
             }
 
-            if (!wasGround && isGround) // °øÁß¡æÂøÁö ¼ø°£¸¸ °¨Áö
+            if (!wasGround && isGround) // ê³µì¤‘â†’ì°©ì§€ ìˆœê°„ë§Œ ê°ì§€
             {
                 isJump = false;
                 anim.SetInteger("isJump", 0);
             }
         }
-
-        prevY = rigid.linearVelocity.y;
     }
 }
