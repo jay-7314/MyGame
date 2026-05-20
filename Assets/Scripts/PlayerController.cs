@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         sprite.flipX = false;
         isTouched = true;
         moveLeft = false;
+        anim.SetBool("isRun", true);
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 0.3f);
     }
