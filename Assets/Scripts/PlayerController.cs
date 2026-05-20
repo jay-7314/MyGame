@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid;
@@ -8,7 +7,6 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     BoxCollider2D boxcollider;
     public Image leftBtn, rightBtn;
-
     bool moveLeft;
     bool moveRight;
     bool isGround;
@@ -20,8 +18,6 @@ public class PlayerController : MonoBehaviour
     public LayerMask layerMask;
     public float movespeed;
     public float jumpForce;
-
-
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -37,17 +33,17 @@ public class PlayerController : MonoBehaviour
     #region 이동 및 버튼 색상 변경 구현
     public void PushLeftBtn()
     {
+        isTouched = true;
+        moveRight = false;
         moveLeft = true;
         sprite.flipX = true;
         isTouched = true;
         moveRight = false;
         anim.SetBool("isRun", true);
-
         SetButtonAlpha(rightBtn, 0.3f);
         SetButtonAlpha(leftBtn, 1f);
     }
-
-    public void UnPushLeftBtn()
+    public void UnPushLeftBtn() 
     {
         isTouched = false;
         StopMove();
@@ -63,10 +59,10 @@ public class PlayerController : MonoBehaviour
         if (!isTouched) return;
         PushLeftBtn();
     }
-
     public void PushRightBtn()
     {
-        anim.SetBool("isRun", true);
+        isTouched = true;
+        moveLeft = false;
         moveRight = true;
         sprite.flipX = false;
         isTouched = true;
@@ -74,8 +70,7 @@ public class PlayerController : MonoBehaviour
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 0.3f);
     }
-
-    public void UnPushRightBtn()
+    public void UnPushRightBtn() 
     {
        isTouched=false;
         StopMove();
@@ -85,7 +80,6 @@ public class PlayerController : MonoBehaviour
     {
         StopMove();
     }
-
     public void EnterRightBtn()
     {
         if (!isTouched) return;
@@ -100,7 +94,6 @@ public class PlayerController : MonoBehaviour
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 1f);
     }
-
     void SetButtonAlpha(Image image, float alpha)
     {
         Color color = image.color;
@@ -124,7 +117,6 @@ public class PlayerController : MonoBehaviour
     {
         MovementPlayer();
     }
-
     void MovementPlayer()
     {
         if (moveLeft && !moveRight)
