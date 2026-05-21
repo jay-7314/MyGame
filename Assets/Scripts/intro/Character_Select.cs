@@ -44,4 +44,13 @@ public class Character_Select : MonoBehaviour
         currentSelected = this;
     }
 
+    public static void ResetAll()
+    {
+        if(currentSelected != null)
+        {
+            currentSelected.isSelect = false;
+            currentSelected = null;
+        }
+    }
+
 }

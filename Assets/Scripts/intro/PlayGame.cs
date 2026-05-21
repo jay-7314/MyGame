@@ -5,6 +5,7 @@ public class PlayGame : MonoBehaviour
 {
     [SerializeField] GameObject titleNbtn, newGame;
     [SerializeField] GameObject[] enemys;
+    [SerializeField] GameObject[] player;
     public void GameStart()
     {
         titleNbtn.SetActive(false);
@@ -28,6 +29,7 @@ public class PlayGame : MonoBehaviour
         {
             enemys[i].SetActive(true);
         }
-        
+        Character_Select.ResetAll();
+
     }
 }
