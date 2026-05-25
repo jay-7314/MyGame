@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b4a2e17bbfd4241b2bbf11144ce2cb, type: 3}
+  m_Name: Speaker_Player0
+  m_EditorClassIdentifier: Assembly-CSharp::SpeakerData
+  speakerId: Player0
+  speakerName: Aren
+  speakerImg: {fileID: 1649148736485151496, guid: 36da7da07071823428686a5f2866b3e5, type: 3}
+  speakerType: 0
