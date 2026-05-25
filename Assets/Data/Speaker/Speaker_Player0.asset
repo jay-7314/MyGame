@@ -16,3 +16,4 @@ MonoBehaviour:
   speakerName: Aren
   speakerImg: {fileID: 1649148736485151496, guid: 36da7da07071823428686a5f2866b3e5, type: 3}
   speakerType: 0
+  isPlayer: 1
