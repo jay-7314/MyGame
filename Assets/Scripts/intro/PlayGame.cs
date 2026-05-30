@@ -18,6 +18,10 @@ public class PlayGame : MonoBehaviour
 
     public void SelectBtn()
     {
+        GameObject Character = Character_Select.currentSelected.gameObject;
+        Destroy(Character.GetComponent<Character_Select>());
+
+        DontDestroyOnLoad(Character);
         SceneManager.LoadScene("Village");
     }
 

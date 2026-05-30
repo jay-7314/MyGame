@@ -4,7 +4,7 @@ public class NewGame : MonoBehaviour
 {
     private void OnEnable()
     {
-        GameObject player = GameObject.Find("Player0");
+        GameObject player = GameObject.Find("Aren");
         if(player != null)
         {
             player.GetComponent<Character_Select>().CharacterSelect();

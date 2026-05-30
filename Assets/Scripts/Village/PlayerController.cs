@@ -20,10 +20,12 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        boxcollider = GetComponent<BoxCollider2D>();
+        GameObject player = GameObject.FindWithTag("Player"); 
+        rigid = player.GetComponent<Rigidbody2D>();
+        sprite = player.GetComponent<SpriteRenderer>();
+        anim = player.GetComponent<Animator>();
+        player.GetComponent<Animator>().SetBool("isSelect", false);
+        boxcollider = player.GetComponent<BoxCollider2D>();
         moveLeft = false;
         moveRight = false;
         isJump = false;

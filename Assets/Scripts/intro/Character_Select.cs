@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class Character_Select : MonoBehaviour
 {
     Animator anim;
-    bool isSelect = false;
-    static Character_Select currentSelected = null;
+    public bool isSelect = false;
+    public static Character_Select currentSelected = null;
 
     [SerializeField] RawImage characterImgs;
     [SerializeField] Text characterStory, characterFeature;

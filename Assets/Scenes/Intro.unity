@@ -2991,8 +2991,8 @@ GameObject:
   - component: {fileID: 1135232448}
   - component: {fileID: 1135232449}
   m_Layer: 0
-  m_Name: Player0
-  m_TagString: Untagged
+  m_Name: Aren
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3154,7 +3154,7 @@ Animator:
   m_GameObject: {fileID: 1135232441}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 02d42057d52af6546a00aa5b974dc4a7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 144d320c60611b74aa543e62a381eb14, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3178,6 +3178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6849298841b2a4d9457f1778588b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character_Select
+  isSelect: 0
   characterImgs: {fileID: 1127922979}
   characterStory: {fileID: 299121025}
   characterFeature: {fileID: 1470370842}
@@ -3309,8 +3310,8 @@ GameObject:
   - component: {fileID: 1148977713}
   - component: {fileID: 1148977714}
   m_Layer: 0
-  m_Name: Player2
-  m_TagString: Untagged
+  m_Name: Kaiel
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3474,6 +3475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6849298841b2a4d9457f1778588b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character_Select
+  isSelect: 0
   characterImgs: {fileID: 1127922979}
   characterStory: {fileID: 299121025}
   characterFeature: {fileID: 1470370842}
@@ -3497,7 +3499,7 @@ Animator:
   m_GameObject: {fileID: 1148977706}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2f1a596ce4157854c97c1000ecad7006, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b48340ec5187ec4d9b0c54a67463355, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4437,8 +4439,8 @@ GameObject:
   - component: {fileID: 1558017797}
   - component: {fileID: 1558017798}
   m_Layer: 0
-  m_Name: Player1
-  m_TagString: Untagged
+  m_Name: Zero
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4526,7 +4528,7 @@ Animator:
   m_GameObject: {fileID: 1558017791}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 58890c1d1243dae4187172619bb21da6, type: 2}
+  m_Controller: {fileID: 9100000, guid: dd086122ab2bed14e94a55a079d8ec38, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4624,6 +4626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6849298841b2a4d9457f1778588b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character_Select
+  isSelect: 0
   characterImgs: {fileID: 1127922979}
   characterStory: {fileID: 299121025}
   characterFeature: {fileID: 1470370842}
