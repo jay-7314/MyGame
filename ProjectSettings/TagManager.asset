@@ -50,5 +50,8 @@ TagManager:
   - name: Land
     uniqueID: 1929824683
     locked: 0
+  - name: Player
+    uniqueID: 4215795345
+    locked: 0
   m_RenderingLayers:
   - Default

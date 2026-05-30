@@ -1,10 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character_Select : MonoBehaviour
 {
     Animator anim;
     bool isSelect = false;
     static Character_Select currentSelected = null;
+
+    [SerializeField] RawImage characterImgs;
+    [SerializeField] Text characterStory, characterFeature;
+
+    [SerializeField] Texture2D myImgs;
+    [TextArea(2,10)]
+    [SerializeField] string mystory;
+    [TextArea(2,10)]
+    [SerializeField] string myfeature;
 
     [SerializeField] GameObject newGame;
 
@@ -30,6 +40,7 @@ public class Character_Select : MonoBehaviour
     private void OnMouseDown()
     {
         CharacterSelect();
+        CharacterChange();
     }
 
     public void CharacterSelect()
@@ -42,6 +53,13 @@ public class Character_Select : MonoBehaviour
         }
         isSelect = true;
         currentSelected = this;
+    }
+
+   public void CharacterChange()
+    {
+        characterImgs.texture = myImgs;
+        characterStory.text = mystory;
+        characterFeature.text = myfeature;
     }
 
     public static void ResetAll()

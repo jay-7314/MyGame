@@ -8,6 +8,7 @@ public class NewGame : MonoBehaviour
         if(player != null)
         {
             player.GetComponent<Character_Select>().CharacterSelect();
+            player.GetComponent<Character_Select>().CharacterChange();
         }
     }
 }
