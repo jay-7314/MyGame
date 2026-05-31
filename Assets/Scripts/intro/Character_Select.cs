@@ -21,6 +21,7 @@ public class Character_Select : MonoBehaviour
     private void OnEnable()
     {
         anim = GetComponent<Animator>();
+        isSelect = true;
     }
 
     private void OnDisable()
@@ -34,7 +35,7 @@ public class Character_Select : MonoBehaviour
 
     public void Update()
     {
-        anim.SetBool("isSelect", isSelect);
+        anim.SetBool("isRun", isSelect);
     }
 
     private void OnMouseDown()
@@ -64,11 +65,13 @@ public class Character_Select : MonoBehaviour
 
     public static void ResetAll()
     {
-        if(currentSelected != null)
+
+        Character_Select[] all = FindObjectsByType<Character_Select>(FindObjectsSortMode.None);
+        for(int i = 0; i< all.Length; i++)
         {
-            currentSelected.isSelect = false;
-            currentSelected = null;
+            all[i].isSelect = false;
         }
+        currentSelected = null;
     }
 
 }

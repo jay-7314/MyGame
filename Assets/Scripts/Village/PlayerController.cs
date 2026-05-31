@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         rigid = player.GetComponent<Rigidbody2D>();
         sprite = player.GetComponent<SpriteRenderer>();
         anim = player.GetComponent<Animator>();
-        player.GetComponent<Animator>().SetBool("isSelect", false);
+        player.GetComponent<Animator>().SetBool("isRun", false);
         boxcollider = player.GetComponent<BoxCollider2D>();
         moveLeft = false;
         moveRight = false;
