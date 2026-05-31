@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGround && !isJump)
         {
+            Debug.Log($"지금 땅에 있는가? {isGround}");
             isJump = true;
             anim.SetInteger("isJump", 1);
             rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -140,7 +141,7 @@ public class PlayerController : MonoBehaviour
         rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
 
         bool wasGround = isGround; // 추가
-        isGround = Physics2D.Raycast(transform.position, Vector2.down, boxcollider.bounds.extents.y + 0.1f, layerMask);
+        isGround = Physics2D.Raycast(rigid.transform.position, Vector2.down, boxcollider.bounds.extents.y + 0.1f, layerMask);
 
         if (isJump) // isJump일 때만 애니메이션 변경
         {

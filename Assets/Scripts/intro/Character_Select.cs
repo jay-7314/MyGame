@@ -38,8 +38,9 @@ public class Character_Select : MonoBehaviour
         anim.SetBool("isRun", isSelect);
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
+        Debug.Log("이거 작동함?");
         CharacterSelect();
         CharacterChange();
     }
