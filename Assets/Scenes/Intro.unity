@@ -2989,6 +2989,7 @@ GameObject:
   - component: {fileID: 1135232442}
   - component: {fileID: 1135232447}
   - component: {fileID: 1135232448}
+  - component: {fileID: 1135232449}
   m_Layer: 0
   m_Name: Aren
   m_TagString: Player
@@ -3191,6 +3192,18 @@ MonoBehaviour:
     \uC54C\uACE0\uBCF4\uBA74 \uCC29\uD55C \uC18C\uB144"
   myfeature: "\uAE30\uBCF8 \uCCB4\uB825 : 100\n\uAE30\uBCF8 \uC18D\uB3C4 : 100"
   newGame: {fileID: 261965061}
+--- !u!114 &1135232449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135232441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce2cbdab978007479d01cbf685cb44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSize
 --- !u!1 &1138235328
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,6 +3290,7 @@ GameObject:
   - component: {fileID: 1148977708}
   - component: {fileID: 1148977707}
   - component: {fileID: 1148977712}
+  - component: {fileID: 1148977714}
   - component: {fileID: 1148977713}
   m_Layer: 0
   m_Name: Kaiel
@@ -3480,6 +3494,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1148977714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148977706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce2cbdab978007479d01cbf685cb44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSize
 --- !u!1 &1220588520
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,6 +4403,7 @@ GameObject:
   - component: {fileID: 1558017793}
   - component: {fileID: 1558017792}
   - component: {fileID: 1558017797}
+  - component: {fileID: 1558017798}
   m_Layer: 0
   m_Name: Zero
   m_TagString: Player
@@ -4581,6 +4608,18 @@ MonoBehaviour:
     \uC9C4\uD589\uACFC \uC0C9\uB2E4\uB978 \uB300\uD654\uAC00 \uB3C5\uBCF4\uC801\uC774\uB2E4."
   myfeature: "\uAE30\uBCF8 \uCCB4\uB825 : 180\n\uAE30\uBCF8 \uC18D\uB3C4 : 150"
   newGame: {fileID: 261965061}
+--- !u!114 &1558017798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558017791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce2cbdab978007479d01cbf685cb44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSize
 --- !u!1 &1584837485
 GameObject:
   m_ObjectHideFlags: 0
