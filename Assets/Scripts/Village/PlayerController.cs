@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
     Animator anim;
-    BoxCollider2D boxcollider;
+    CircleCollider2D circleCollider;
     public Image leftBtn, rightBtn;
     bool moveLeft;
     bool moveRight;
@@ -13,19 +13,23 @@ public class PlayerController : MonoBehaviour
     bool isJump;
     bool isTouched;
 
-
     float horizontalMove;
     public LayerMask layerMask;
     public float movespeed;
     public float jumpForce;
+    public float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+    private float landingBuffer = 0f;
+    private float landingBufferTime = 0.1f;
+
     private void Awake()
     {
-        GameObject player = GameObject.FindWithTag("Player"); 
+        GameObject player = GameObject.FindWithTag("Player");
         rigid = player.GetComponent<Rigidbody2D>();
         sprite = player.GetComponent<SpriteRenderer>();
         anim = player.GetComponent<Animator>();
         player.GetComponent<Animator>().SetBool("isRun", false);
-        boxcollider = player.GetComponent<BoxCollider2D>();
+        circleCollider = player.GetComponent<CircleCollider2D>();
         moveLeft = false;
         moveRight = false;
         isJump = false;
@@ -39,13 +43,12 @@ public class PlayerController : MonoBehaviour
         moveRight = false;
         moveLeft = true;
         sprite.flipX = true;
-        isTouched = true;
-        moveRight = false;
+        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         anim.SetBool("isRun", true);
         SetButtonAlpha(rightBtn, 0.3f);
         SetButtonAlpha(leftBtn, 1f);
     }
-    public void UnPushLeftBtn() 
+    public void UnPushLeftBtn()
     {
         isTouched = false;
         StopMove();
@@ -67,15 +70,14 @@ public class PlayerController : MonoBehaviour
         moveLeft = false;
         moveRight = true;
         sprite.flipX = false;
-        isTouched = true;
-        moveLeft = false;
+        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         anim.SetBool("isRun", true);
         SetButtonAlpha(rightBtn, 1f);
         SetButtonAlpha(leftBtn, 0.3f);
     }
-    public void UnPushRightBtn() 
+    public void UnPushRightBtn()
     {
-       isTouched=false;
+        isTouched = false;
         StopMove();
     }
 
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
     void StopMove()
     {
         anim.SetBool("isRun", false);
+        rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         moveRight = false;
         moveLeft = false;
         SetButtonAlpha(rightBtn, 1f);
@@ -108,57 +111,79 @@ public class PlayerController : MonoBehaviour
     #region 점프
     public void Jump()
     {
-        if (isGround && !isJump)
+        Debug.Log($"점프 누름 - coyoteTimeCounter: {coyoteTimeCounter}");
+        if (coyoteTimeCounter > 0f && !isJump)
         {
-            Debug.Log($"지금 땅에 있는가? {isGround}");
             isJump = true;
+            coyoteTimeCounter = 0f;
             anim.SetInteger("isJump", 1);
             rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
     #endregion
+
     private void Update()
     {
         MovementPlayer();
     }
+
     void MovementPlayer()
     {
         if (moveLeft && !moveRight)
-        {
             horizontalMove = -movespeed;
-        }
         else if (moveRight && !moveLeft)
-        {
             horizontalMove = movespeed;
-        }
         else
-        {
             horizontalMove = 0;
-        }
     }
+
     private void FixedUpdate()
     {
         rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
 
-        bool wasGround = isGround; // 추가
-        isGround = Physics2D.Raycast(rigid.transform.position, Vector2.down, boxcollider.bounds.extents.y + 0.1f, layerMask);
+        // 바닥 감지
+        Vector2 boxSize = new Vector2(circleCollider.bounds.size.x * 0.9f, 0.1f);
+        Vector2 boxOrigin = new Vector2(circleCollider.bounds.center.x, circleCollider.bounds.min.y);
+        float castDistance = 0.1f;
 
-        if (isJump) // isJump일 때만 애니메이션 변경
+        RaycastHit2D hit = Physics2D.BoxCast(boxOrigin, boxSize, 0f, Vector2.down, castDistance, layerMask);
+        isGround = hit.collider != null;
+
+        // 코요테 타임 갱신
+        if (isGround)
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.fixedDeltaTime;
+
+        // 착지 버퍼 갱신 — 하강 중이거나 정지 중일 때만 채움 (아래에서 위로 통과 시 오인식 방지)
+        if (isGround && rigid.linearVelocity.y <= 0f)
+            landingBuffer = landingBufferTime;
+        else
+            landingBuffer -= Time.fixedDeltaTime;
+
+        Debug.DrawRay(boxOrigin + Vector2.left * boxSize.x / 2, Vector2.down * castDistance, Color.red);
+        Debug.DrawRay(boxOrigin + Vector2.right * boxSize.x / 2, Vector2.down * castDistance, Color.red);
+
+        // 점프 상태 처리
+        if (isJump)
         {
-            if (rigid.linearVelocity.y > 0)
-            {
+            if (rigid.linearVelocity.y > 0.1f)
                 anim.SetInteger("isJump", 1);
-            }
-            else if (rigid.linearVelocity.y < 0)
-            {
+            else if (rigid.linearVelocity.y < -0.1f)
                 anim.SetInteger("isJump", 2);
-            }
 
-            if (!wasGround && isGround) // 공중→착지 순간만 감지
+            // 착지 버퍼가 남아있고 상승 중이 아닐 때만 착지로 인정
+            if (landingBuffer > 0f && rigid.linearVelocity.y <= 0.1f)
             {
                 isJump = false;
+                landingBuffer = 0f;
                 anim.SetInteger("isJump", 0);
+
+                if (!moveLeft && !moveRight)
+                    anim.SetBool("isRun", false);
             }
         }
+
+        Debug.Log($"isGround: {isGround}, isJump: {isJump}, landingBuffer: {landingBuffer}, animParam: {anim.GetInteger("isJump")}, hitCollider: {hit.collider?.name}, velY: {rigid.linearVelocity.y}");
     }
 }

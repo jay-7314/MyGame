@@ -15,8 +15,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] Image rightCharacterImg;
 
     DialogueData currentDialogueData;                           //현재 대사 데이터
-    int currentIndex;                                           //현재 대사 인덱스
-    Action onEndCallback;                                       //대사 종료시 호출할 콜백??
+    int currentIndex;                                                          //현재 대사 인덱스
+    Action onEndCallback;                                                //대사 종료시 호출할 콜백??
     public bool isDialogueCheck { get; private set; }
 
 
