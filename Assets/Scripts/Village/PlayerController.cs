@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     bool moveRight;
     bool isGround;
     bool isJump;
-    bool isTouched;
+    bool leftHeld;
+    bool rightHeld;
 
     float horizontalMove;
     public LayerMask layerMask;
@@ -33,62 +34,81 @@ public class PlayerController : MonoBehaviour
         moveLeft = false;
         moveRight = false;
         isJump = false;
-        isTouched = false;
+        leftHeld = false;
+        rightHeld = false;
     }
 
     #region 이동 및 버튼 색상 변경 구현
     public void PushLeftBtn()
     {
-        isTouched = true;
-        moveRight = false;
-        moveLeft = true;
-        sprite.flipX = true;
-        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        anim.SetBool("isRun", true);
-        SetButtonAlpha(rightBtn, 0.3f);
-        SetButtonAlpha(leftBtn, 1f);
+        leftHeld = true;
+        ApplyMoveState();
     }
     public void UnPushLeftBtn()
     {
-        isTouched = false;
-        StopMove();
+        leftHeld = false;
+        ApplyMoveState();
     }
 
     public void ExitLeftBtn()
     {
-        StopMove();
+        leftHeld = false;
+        ApplyMoveState();
     }
 
     public void EnterLeftBtn()
     {
-        if (!isTouched) return;
-        PushLeftBtn();
+        if (!leftHeld) return;
+        ApplyMoveState();
     }
     public void PushRightBtn()
     {
-        isTouched = true;
-        moveLeft = false;
-        moveRight = true;
-        sprite.flipX = false;
-        rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-        anim.SetBool("isRun", true);
-        SetButtonAlpha(rightBtn, 1f);
-        SetButtonAlpha(leftBtn, 0.3f);
+        rightHeld = true;
+        ApplyMoveState();
     }
     public void UnPushRightBtn()
     {
-        isTouched = false;
-        StopMove();
+        rightHeld = false;
+        ApplyMoveState();
     }
 
     public void ExitRightBtn()
     {
-        StopMove();
+        rightHeld = false;
+        ApplyMoveState();
     }
     public void EnterRightBtn()
     {
-        if (!isTouched) return;
-        PushRightBtn();
+        if (!rightHeld) return;
+        ApplyMoveState();
+    }
+
+    void ApplyMoveState()
+    {
+        if (leftHeld && !rightHeld)
+        {
+            moveLeft = true;
+            moveRight = false;
+            sprite.flipX = true;
+            rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+            anim.SetBool("isRun", true);
+            SetButtonAlpha(rightBtn, 0.3f);
+            SetButtonAlpha(leftBtn, 1f);
+        }
+        else if (rightHeld && !leftHeld)
+        {
+            moveLeft = false;
+            moveRight = true;
+            sprite.flipX = false;
+            rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+            anim.SetBool("isRun", true);
+            SetButtonAlpha(rightBtn, 1f);
+            SetButtonAlpha(leftBtn, 0.3f);
+        }
+        else
+        {
+            StopMove();
+        }
     }
 
     void StopMove()
@@ -125,7 +145,29 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         MovementPlayer();
+
+#if UNITY_EDITOR
+        HandleKeyboardInput();
+#endif
     }
+
+#if UNITY_EDITOR
+    void HandleKeyboardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            PushLeftBtn();
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
+            UnPushLeftBtn();
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            PushRightBtn();
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+            UnPushRightBtn();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Jump();
+    }
+#endif
 
     void MovementPlayer()
     {
