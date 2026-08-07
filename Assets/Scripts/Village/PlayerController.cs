@@ -131,12 +131,13 @@ public class PlayerController : MonoBehaviour
     #region 점프
     public void Jump()
     {
-        Debug.Log($"점프 누름 - coyoteTimeCounter: {coyoteTimeCounter}");
         if (coyoteTimeCounter > 0f && !isJump)
         {
             isJump = true;
             coyoteTimeCounter = 0f;
             anim.SetInteger("isJump", 1);
+
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0f);  //이 부분이 없으면 언덕에서 점프할때 비이상적으로 높게 점프가 됨. 이 기능을 추가하므로써 언제나 일정하게 점프함
             rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
@@ -226,6 +227,5 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log($"isGround: {isGround}, isJump: {isJump}, landingBuffer: {landingBuffer}, animParam: {anim.GetInteger("isJump")}, hitCollider: {hit.collider?.name}, velY: {rigid.linearVelocity.y}");
     }
 }
