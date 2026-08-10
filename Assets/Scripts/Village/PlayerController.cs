@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
 
         // 바닥 감지
-        Vector2 boxSize = new Vector2(circleCollider.bounds.size.x * 0.9f, 0.1f);
+        Vector2 boxSize = new Vector2(circleCollider.bounds.size.x * 0.9f, 0.5f);
         Vector2 boxOrigin = new Vector2(circleCollider.bounds.center.x, circleCollider.bounds.min.y);
         float castDistance = 0.1f;
 
