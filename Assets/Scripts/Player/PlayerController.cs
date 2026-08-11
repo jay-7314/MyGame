@@ -155,14 +155,14 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     void HandleKeyboardInput()
     {
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if ( Input.GetKeyDown(KeyCode.LeftArrow))
             PushLeftBtn();
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
+        if ( Input.GetKeyUp(KeyCode.LeftArrow))
             UnPushLeftBtn();
 
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
             PushRightBtn();
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
             UnPushRightBtn();
 
         if (Input.GetKeyDown(KeyCode.Space))
