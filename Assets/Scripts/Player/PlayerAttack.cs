@@ -3,12 +3,20 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] Animator anim;
+    private bool isAttacking = false;
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !isAttacking)
         {
-            anim.SetTrigger("Attack");
+            isAttacking = true;
+            int rand = Random.Range(0, 2);
+            anim.SetTrigger(rand == 0 ? "Attack" : "Attack1");
         }
+    }
+
+    public void OnAttackAnimationEnd()
+    {
+        isAttacking = false;
     }
 }
