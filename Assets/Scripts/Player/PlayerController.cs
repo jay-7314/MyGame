@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float landingBuffer = 0f;
     private float landingBufferTime = 0.1f;
 
+    [SerializeField] PlayerAttack playerAttack;
+
     private void Awake()
     {
         GameObject player = GameObject.FindWithTag("Player");
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         isJump = false;
         leftHeld = false;
         rightHeld = false;
+        playerAttack = player.GetComponentInChildren<PlayerAttack>();
     }
 
     #region 이동 및 버튼 색상 변경 구현
@@ -90,6 +93,7 @@ public class PlayerController : MonoBehaviour
             moveLeft = true;
             moveRight = false;
             sprite.flipX = true;
+            playerAttack.SetFacing(true);
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
             anim.SetBool("isRun", true);
             SetButtonAlpha(rightBtn, 0.3f);
@@ -100,6 +104,7 @@ public class PlayerController : MonoBehaviour
             moveLeft = false;
             moveRight = true;
             sprite.flipX = false;
+            playerAttack.SetFacing(false);
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
             anim.SetBool("isRun", true);
             SetButtonAlpha(rightBtn, 1f);
