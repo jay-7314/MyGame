@@ -14,21 +14,15 @@ public class PlayerAttack : MonoBehaviour
     public void EnableHitbox()
     {
         hitboxCollider.enabled = true;
-        Debug.Log($"[Frame {Time.frameCount}] EnableHitbox 호출됨");
     }
 
     public void DisableHitbox()
     {
         hitboxCollider.enabled = false;
-        Debug.Log($"[Frame {Time.frameCount}] DisableHitbox 호출됨");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"[Frame {Time.frameCount}] Trigger 발생, hitbox enabled: {hitboxCollider.enabled}, " +
-                   $"충돌 오브젝트: {collision.gameObject.name}, InstanceID: {collision.GetInstanceID()}, " +
-                   $"부모: {(collision.transform.parent != null ? collision.transform.parent.name : "없음")}");
-
         if (collision.CompareTag("Enemy"))
         {
             Debug.Log($"{collision.name}에게 데미지{damage}를 입혔습니다.");

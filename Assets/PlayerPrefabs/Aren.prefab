@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 5615051417941558997}
   - component: {fileID: 5427269883187134308}
   - component: {fileID: -3379866751503092912}
-  - component: {fileID: 8509388145405509912}
   - component: {fileID: 4989657326303206610}
+  - component: {fileID: 3344310507221613949}
   m_Layer: 0
   m_Name: Aren
   m_TagString: Player
@@ -205,21 +205,6 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!114 &8509388145405509912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4252122442430149951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b928cbd90c8434b841718d06b81ff3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  hitboxCollider: {fileID: 3372131125836130844}
-  damage: 10
-  anim: {fileID: 1901373018755930491}
 --- !u!58 &4989657326303206610
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -256,6 +241,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.05, y: -0.4}
   m_Radius: 0.11728221
+--- !u!114 &3344310507221613949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252122442430149951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b928cbd90c8434b841718d06b81ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  hitboxCollider: {fileID: 3372131125836130844}
+  damage: 10
+  anim: {fileID: 1901373018755930491}
 --- !u!1 &5233989103966173528
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +266,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5166029930866828337}
   - component: {fileID: 3372131125836130844}
-  - component: {fileID: 5700230094694631215}
   m_Layer: 0
   m_Name: AttackHitBox
   m_TagString: Untagged
@@ -335,18 +334,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.55279136, y: 0.26820397}
   m_EdgeRadius: 0
---- !u!114 &5700230094694631215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5233989103966173528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b928cbd90c8434b841718d06b81ff3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
-  hitboxCollider: {fileID: 3372131125836130844}
-  damage: 10
-  anim: {fileID: 1901373018755930491}
