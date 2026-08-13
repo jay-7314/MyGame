@@ -17,19 +17,24 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public event Action<Enemy> OnDeath;                                             //죽은 상태를 다른 컴포넌트도 알수있게 조치
     public float healthRatio => currentHealth / maxHealth;                     //체력 비율을 계산
+
+
     protected virtual void Awake()
     {
-        currentHealth = maxHealth;                                                          //태어났을때는 현재체력은 최대채력임
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-        }
+        currentHealth = maxHealth;   // 시작할 때 현재 체력을 최대 체력으로 초기화
     }
 
-    protected virtual void Update()     //움직이는 것과 공격하는건 업데이트에서 진행
+    protected virtual void Update()
     {
-        if (currentHealth <= 0) return;                 //죽으면 이동/공격 안함.
+        if (currentHealth <= 0) return;
+
+        // player가 없으면 다시 찾는다.
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null) player = playerObj.transform;
+        }
+
         Move();
         Attack();
     }
