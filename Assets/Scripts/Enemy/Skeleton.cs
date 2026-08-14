@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class Skeleton : Enemy
 {
@@ -9,27 +10,40 @@ public class Skeleton : Enemy
         Attack
     }
 
-    //í”Œë ˆì´ì–´ ì¶”ì 
-    [SerializeField] float chaseRange = 5f;                                 //í”Œë ˆì´ì–´ ê°ì§€ë°˜ê²½
-    [SerializeField] float attackRange = 1f;                                //ê³µê²© ì‚¬ê±°ë¦¬
+    //ÇÃ·¹ÀÌ¾î ÃßÀû
+    [SerializeField] float chaseRange = 5f;                                 //ÇÃ·¹ÀÌ¾î °¨Áö¹İ°æ
+    [SerializeField] float attackRange = 1f;                                //°ø°İ »ç°Å¸®
 
-    //ì ˆë²½ê°ì§€
-    [SerializeField] LayerMask groundLayer;                            //ë°”ë‹¥ ë ˆì´ì–´
-    [SerializeField] Transform groundCheckPoint;                    //ë°”ë‹¥ ì²´í¬í•˜ëŠ” Transform
-    [SerializeField] float groundCheckDistance = 0.5f;              //ë°”ë‹¥ì²´í¬í•˜ëŠ” ê±°ë¦¬
+    //¼øÂû (DOTween ÀÌ¿ë. ±âÁ¸¿£ Raycast·Î Àıº®À» °¨ÁöÇß´Âµ¥, Ä³¸¯ÅÍ°¡ Àıº® °æ°è¼±¿¡ °ÉÄ¡¸é
+    //¹İÀü->ÀÌµ¿->´Ù½Ã¹İÀü ÀÌ ¹İº¹µÇ¸é¼­ ¹ßÆÇ ³¡¿¡¼­ ¶°´Â ¹ö±×°¡ ÀÖ¾î¼­ Àıº®°¨Áö ÀÚÃ¼¸¦ ¾ø¾Ö°í
+    //½ÃÀÛÀ§Ä¡ ±âÁØ ÁÂ¿ì °Å¸®¸¸Å­¸¸ ¿Õº¹ÇÏ´Â ¹æ½ÄÀ¸·Î ¹Ù²Ş. ¹ßÆÇ Æøº¸´Ù ÀÛ°Ô Àâ¾ÆµÎ¸é Àıº® ¹®Á¦ ÀÚÃ¼°¡ ¾È»ı±è.
+    [SerializeField] float patrolDistance = 2f;                             //½ÃÀÛÀ§Ä¡ ±âÁØ ÁÂ¿ì·Î ¾ó¸¶³ª ¿Õº¹ÇÒÁö
+    [SerializeField] float patrolSpeed = 2f;                                     //¼øÂû ÀÌµ¿¼Óµµ
+    [SerializeField] float patrolWaitTime = 0.5f;                             //¿Õº¹ ÁöÁ¡ µµÂøÇÏ°í Àá±ñ ¸ØÃß´Â ½Ã°£
 
-    //ì• ë‹ˆë©”ì´ì…˜ ë° ê³µê²©ê´€ë ¨
-    [SerializeField] Animator anim;                                          //ì• ë‹ˆë©”ì´ì…˜ ê°€ì ¸ì˜¤ê¸°
-    [SerializeField] float attackCooldown = 1.5f;                       //ê³µê²© ì¿¨ë‹¤ìš´
-    [SerializeField] float dieDestroyDeley = 1f;                         //ì£½ëŠ” ì‹œê°„
+    //¾Ö´Ï¸ŞÀÌ¼Ç ¹× °ø°İ°ü·Ã
+    [SerializeField] Animator anim;                                          //¾Ö´Ï¸ŞÀÌ¼Ç °¡Á®¿À±â
+    [SerializeField] float attackCooldown = 1.5f;                       //°ø°İ Äğ´Ù¿î
+    [SerializeField] float dieDestroyDeley = 1f;                         //Á×´Â ½Ã°£
 
-    AIState currentState = AIState.Patrol;                                  //í˜„ì¬ ìƒíƒœëŠ” ì¶”ì ìƒíƒœ
-    int patroDir = 1;                                                                   //ë°©í–¥ì „í™˜. ì•½ê°„ flipìœ¼ë¡œ ìƒê°í•˜ë©´ ë¨
-    float lastAttackTime = -999f;                                               //ë§ˆì§€ë§‰ ê³µê²©í•˜ê³  ë‚˜ì„œ ì¿¨íƒ€ì„ì„ ì£¼ê¸° ìœ„í•¨
-    bool isDead = false;                                                             //ì£½ì€ìƒíƒœ í™•ì¸
-    Rigidbody2D rb; 
+    // ===== µğ¹ö±×¿ë =====
+    [Header("Debug")]
+    [SerializeField] bool debugLog = true;                                    //µğ¹ö±× ·Î±× on/off
+    [SerializeField] float debugLogInterval = 0.5f;                     //¸Å ÇÁ·¹ÀÓ ÂïÀ¸¸é ÄÜ¼Ö ÅÍÁö´Ï±î °£°İ µÎ°í ÂïÀ½
+    float lastDebugLogTime = -999f;
+    // ====================
 
-    //ì•„ë˜ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì½”ë“œë¥¼ ì‘ì„±í• ë•Œ ì˜¤íƒ€ê°€ ë‚ ìˆ˜ ìˆì–´ì„œ ì •ë¦¬í•œ ë¶€ë¶„
+    AIState currentState = AIState.Patrol;                                  //ÇöÀç »óÅÂ´Â ÃßÀû»óÅÂ
+    AIState previousState = AIState.Patrol;                               //»óÅÂ°¡ ¹Ù²î´Â ¼ø°£À» Àâ¾Æ³»·Á°í ÀÌÀü ÇÁ·¹ÀÓ »óÅÂ¸¦ ÀúÀåÇØµÒ
+    float lastAttackTime = -999f;                                               //¸¶Áö¸· °ø°İÇÏ°í ³ª¼­ ÄğÅ¸ÀÓÀ» ÁÖ±â À§ÇÔ
+    bool isDead = false;                                                             //Á×Àº»óÅÂ È®ÀÎ
+    Rigidbody2D rb;
+
+    Tween patrolTween;                                                              //¼øÂûÁßÀÎ Æ®À©À» µé°íÀÖ¾î¾ß ChaseÀüÈ¯½Ã Á×ÀÏ¼öÀÖÀ½
+    float basePosX;                                                                        //¼øÂû ¿Õº¹ÀÇ ±âÁØÀÌ µÇ´Â ½ÃÀÛ xÁÂÇ¥
+    float patrolTargetX;                                                                 //Áö±İ ÀÌµ¿ÁßÀÎ ¸ñÇ¥ xÁÂÇ¥
+
+    //¾Æ·¡´Â ¾Ö´Ï¸ŞÀÌ¼Ç ÄÚµå¸¦ ÀÛ¼ºÇÒ¶§ ¿ÀÅ¸°¡ ³¯¼ö ÀÖ¾î¼­ Á¤¸®ÇÑ ºÎºĞ
     static readonly int speedParam = Animator.StringToHash("Speed");
     static readonly int attackTriggerParam = Animator.StringToHash("AttackTrigger");
     static readonly int AttackIndexParam = Animator.StringToHash("AttackIndex");
@@ -39,45 +53,58 @@ public class Skeleton : Enemy
     protected override void Awake()
     {
         base.Awake();
-        rb = GetComponent<Rigidbody2D>();  // Rigidbody2Dë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+        rb = GetComponent<Rigidbody2D>();  // Rigidbody2D¸¦ °¡Á®¿Â´Ù.
     }
 
-    //ëª¬ìŠ¤í„° ìƒíƒœ ë³€ê²½
+    void Start()
+    {
+        basePosX = transform.position.x;                                    //½ºÆùµÈ À§Ä¡¸¦ ¼øÂû ±âÁØÁ¡À¸·Î ÀúÀå
+        patrolTargetX = basePosX + patrolDistance;                //ÀÏ´Ü ¿À¸¥ÂÊ ³¡À» ¸ñÇ¥·Î ½ÃÀÛ
+    }
+
+    //¸ó½ºÅÍ »óÅÂ º¯°æ
     void UpdateState()
     {
-        if (player == null)              //í”Œë ˆì´ì–´ê°€ ì—†ë‹¤ë©´
+        if (player == null)              //ÇÃ·¹ÀÌ¾î°¡ ¾ø´Ù¸é
         {
-            currentState = AIState.Patrol;          //ê¸°ë³¸ìƒíƒœì¸ ìˆœì°°ìƒíƒœë¡œ ëŒì•„ê°„ë‹¤.
+            currentState = AIState.Patrol;          //±âº»»óÅÂÀÎ ¼øÂû»óÅÂ·Î µ¹¾Æ°£´Ù.
+
+            if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
+            {
+                lastDebugLogTime = Time.time;
+                Debug.Log($"[Skeleton:{name}] player == null -> State: Patrol");
+            }
             return;
         }
 
-        float dist = Vector2.Distance(transform.position, player.position);             //í”Œë ˆì´ì–´ì™€ ëª¬ìŠ¤í„°ì™€ì˜ ê±°ë¦¬
-        if (dist <= attackRange)                                                                              //ê³µê²© ë²”ìœ„ë³´ë‹¤ distê°€ ì‘ë‹¤ë©´
+        float dist = Vector2.Distance(transform.position, player.position);             //ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍ¿ÍÀÇ °Å¸®
+        AIState newState;
+
+        if (dist <= attackRange)                                                                              //°ø°İ ¹üÀ§º¸´Ù dist°¡ ÀÛ´Ù¸é
         {
-            currentState = AIState.Attack;                                                              //ìƒíƒœê°’ì€ ê³µê²©ìœ¼ë¡œ ë°”ê¾¼ë‹¤.
+            newState = AIState.Attack;                                                              //»óÅÂ°ªÀº °ø°İÀ¸·Î ¹Ù²Û´Ù.
         }
-        else if (dist <= chaseRange)                                                                         //ì¶”ì ìƒíƒœì˜ ë²”ìœ„ë³´ë‹¤ distê°€ ì‘ë‹¤ë©´
+        else if (dist <= chaseRange)                                                                         //ÃßÀû»óÅÂÀÇ ¹üÀ§º¸´Ù dist°¡ ÀÛ´Ù¸é
         {
-            currentState = AIState.Chase;                                                                   //ì¶”ì ìƒíƒœë¡œ ë°”ê¾¼ë‹¤.
+            newState = AIState.Chase;                                                                   //ÃßÀû»óÅÂ·Î ¹Ù²Û´Ù.
         }
         else
         {
-            currentState = AIState.Patrol;                                                                          //ì•„ë¬´ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ìˆœì°°ìƒíƒœë¡œ ë°”ê¾¼ë‹¤.
+            newState = AIState.Patrol;                                                                          //¾Æ¹«»óÅÂ°¡ ¾Æ´Ï¶ó¸é ¼øÂû»óÅÂ·Î ¹Ù²Û´Ù.
         }
+
+        currentState = newState;
+
+        // ===== µğ¹ö±× ·Î±× =====
+        if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
+        {
+            lastDebugLogTime = Time.time;
+            Debug.Log($"[Skeleton:{name}] dist={dist:F2} | chaseRange={chaseRange} | attackRange={attackRange} | State={currentState} | pos={transform.position.x:F2} | playerPos={player.position.x:F2} | velocity={(rb != null ? rb.linearVelocity : Vector2.zero)}");
+        }
+        // ======================
     }
 
-    //ì§€ì •í•œ ë°©í–¥ ì•ì— ì ˆë²½ì´ ìˆëŠ”ì§€ í™•ì¸í•œë‹¤.
-    bool IsClif(int dir)
-    {
-        if (groundCheckPoint == null) return false;                                                                                                              //ë•…ì— ìˆì§€ ì•Šë‹¤ë©´ false
-
-        Vector2 origin = groundCheckPoint.position;                                                                                                           //ë ˆì´ìºìŠ¤íŠ¸ ì‹œì‘ ì§€ì  ì„¤ì •
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);                        //ë•…ì•„ë˜ì— ê´‘ì„ ì„ ìœë‹¤.
-        Debug.DrawRay(origin, Vector2.down * groundCheckDistance, hit.collider != null ? Color.green : Color.red);          //ê·¸ ê´‘ì„ ì„ í‘œì‹œí•œë‹¤.
-        return hit.collider == null;                                                                                                                                        // ë°”ë‹¥ì´ ê°ì§€ë˜ì§€ ì•Šìœ¼ë©´ ì ˆë²½ìœ¼ë¡œ íŒë‹¨
-    }
-
-    // ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ì¢Œìš° ë°˜ì „ì‹œì¼œ ì´ë™ ë°©í–¥ì„ ì‹œê°ì ìœ¼ë¡œ í‘œí˜„í•œë‹¤.
+    // ½ºÇÁ¶óÀÌÆ®¸¦ ÁÂ¿ì ¹İÀü½ÃÄÑ ÀÌµ¿ ¹æÇâÀ» ½Ã°¢ÀûÀ¸·Î Ç¥ÇöÇÑ´Ù.
     void FlipVisual()
     {
         Vector3 scale = transform.localScale;
@@ -85,73 +112,160 @@ public class Skeleton : Enemy
         transform.localScale = scale;
     }
 
-    //ì›€ì§ì„
+    //ÀÌµ¿ ¹æÇâ º¸°í ÇÊ¿äÇÒ¶§¸¸ ¹İÀü½ÃÅ°´Â ÇÔ¼ö. Chase¶û Patrol µÑ´Ù ½á¼­ µû·Î »­
+    void FaceDirection(float moveDir)
+    {
+        bool facingRight = transform.localScale.x > 0f;                                                                         //xÀÇ ¹æÇâÀÌ 0º¸´Ù Å©¸é
+        if ((moveDir > 0f && !facingRight) || (moveDir < 0f && facingRight))                                           //¿ŞÂÊ, ¿À¸¥ÂÊ ±¸ºĞ
+        {
+            FlipVisual();                                                                                                                       //±¸ºĞÇØ¼­ ½ºÇÁ¶óÀÌÆ® ÀüÈ¯½ÃÅ²´Ù.
+        }
+    }
+
+    //¿òÁ÷ÀÓ
     protected override void Move()
     {
-        if (isDead) return;                     //ì£½ìœ¼ë©´ returnì‹œí‚¨ë‹¤.
-        UpdateState();                          //ìƒíƒœë¥¼ ë³€í™”ì‹œí‚¨ë‹¤.
+        if (isDead) return;                     //Á×À¸¸é return½ÃÅ²´Ù.
+        UpdateState();                          //»óÅÂ¸¦ º¯È­½ÃÅ²´Ù.
 
-        if (currentState == AIState.Attack)                 //ìƒíƒœê°’ì´ ê³µê²©ì´ë¼ë©´
+        //»óÅÂ°¡ ¹Ù²ï ÇÁ·¹ÀÓ¿¡¸¸ Æ®À© Á¤Áö/Àç½ÃÀÛ Ã³¸®. ¸ÅÇÁ·¹ÀÓ Ã¼Å©ÇÏ¸é ³¶ºñ¶ó ÀÌ·¸°ÔÇÔ
+        if (currentState != previousState)
         {
-            anim.SetFloat(speedParam, 0f);                  //ê³µê²©ì¤‘ì—ëŠ” ì›€ì§ì´ë©´ ì•ˆëœë‹¤.
+            if (debugLog)
+            {
+                Debug.Log($"[Skeleton:{name}] ¡Ú»óÅÂÀüÈ¯¡Ú {previousState} -> {currentState}");
+            }
+
+            OnStateChanged(previousState, currentState);
+            previousState = currentState;
+        }
+
+        if (currentState == AIState.Attack)                 //»óÅÂ°ªÀÌ °ø°İÀÌ¶ó¸é
+        {
+            anim.SetFloat(speedParam, 0f);                  //°ø°İÁß¿¡´Â ¿òÁ÷ÀÌ¸é ¾ÈµÈ´Ù.
             return;
         }
 
-        int moveDir = patroDir;                                 // ê¸°ë³¸ ì´ë™ ë°©í–¥ì€ ìˆœì°° ë°©í–¥ìœ¼ë¡œ ì„¤ì •
-
-        if (currentState == AIState.Chase && player != null)                    //ìƒíƒœê°’ì´ ì¶”ì ìƒíƒœì´ê³ , í”Œë ˆì´ì–´ê°€ ìˆë‹¤ë©´
+        if (currentState == AIState.Chase && player != null)                    //»óÅÂ°ªÀÌ ÃßÀû»óÅÂÀÌ°í, ÇÃ·¹ÀÌ¾î°¡ ÀÖ´Ù¸é
         {
-            moveDir = player.position.x > transform.position.x ? 1 : -1;                    // í”Œë ˆì´ì–´ê°€ ì˜¤ë¥¸ìª½ì´ë©´ 1, ì™¼ìª½ì´ë©´ -1ë¡œ ì¶”ì  ë°©í–¥ ê²°ì •, í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ ì›€ì§ì¸ë‹¤.
-        }
-
-        if (IsClif(moveDir))
-        {
-            // ìˆœì°°, ì¶”ì  ë‘˜ ë‹¤ ì ˆë²½ ì•ì—ì„œëŠ” ë©ˆì¶˜ë‹¤.
-            if (currentState == AIState.Patrol)
-            {
-                patroDir *= -1;
-                FlipVisual();
-            }
-            else if (currentState == AIState.Chase)
-            {
-                // ì¶”ì  ì¤‘ ì ˆë²½ì„ ë§Œë‚˜ë©´ ìƒíƒœë¥¼ ìˆœì°°ë¡œ ë˜ëŒë¦°ë‹¤.
-                currentState = AIState.Patrol;
-            }
-            anim.SetFloat(speedParam, 0f);
+            ChaseMove();                                                                                     //ÃßÀûÀº ±âÁ¸Ã³·³ Rigidbody velocity·Î ÀÌµ¿
             return;
         }
 
-        rb.linearVelocity = new Vector2(moveDir * speed, rb.linearVelocity.y);                             //ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë¡œì§
-        anim.SetFloat(speedParam, speed);                                                                                       //ì†ë„ë¥¼ ë‚´ë¼
-
-        bool facingRight = transform.localScale.x > 0f;                                                                         //xì˜ ë°©í–¥ì´ 0ë³´ë‹¤ í¬ë©´
-        if ((moveDir == 1 && !facingRight) || (moveDir == -1 && facingRight))                                           //ì™¼ìª½, ì˜¤ë¥¸ìª½ êµ¬ë¶„
+        //PatrolÀÎµ¥ Æ®À©ÀÌ Á×¾îÀÖÀ¸¸é ´Ù½Ã ½ÃÀÛ (Chase°¬´Ù µ¹¾Æ¿ÔÀ»¶§ ´ëºñÇÑ ¾ÈÀüÀåÄ¡)
+        if (currentState == AIState.Patrol && (patrolTween == null || !patrolTween.IsActive()))
         {
-            FlipVisual();                                                                                                                       //êµ¬ë¶„í•´ì„œ ìŠ¤í”„ë¼ì´íŠ¸ ì „í™˜ì‹œí‚¨ë‹¤.
+            StartPatrolTween();
         }
     }
 
-    //ê³µê²©
+    //Patrol <-> Chase/Attack ÀüÈ¯µÉ¶§ Æ®À©À» Á×ÀÌ°Å³ª ´Ù½Ã »ì¸®´Â Ã³¸®
+    void OnStateChanged(AIState from, AIState to)
+    {
+        if (to != AIState.Patrol)
+        {
+            KillPatrolTween();                                                                                     //ÃßÀû/°ø°İ µé¾î°¡¸é ¼øÂûÆ®À©Àº ¹Ù·Î Á×¿©¾ßÇÔ
+        }
+        else if (from != AIState.Patrol)
+        {
+            //Patrol·Î º¹±ÍÇßÀ»¶§ Áö±İ À§Ä¡¿¡¼­ ´õ °¡±î¿î ¿Õº¹ ³¡Á¡À» ´ÙÀ½ ¸ñÇ¥·Î ÀâÀ½
+            //¾È±×·¯¸é º¹±ÍÇÏÀÚ¸¶ÀÚ ¹İ´ëÆí ³¡±îÁö ¼ø°£ÀÌµ¿ÇÏµí Æ¨°Ü³ª°¡´Â ´À³¦ÀÌ ³²
+            float leftEnd = basePosX - patrolDistance;
+            float rightEnd = basePosX + patrolDistance;
+            float distToLeft = Mathf.Abs(transform.position.x - leftEnd);
+            float distToRight = Mathf.Abs(transform.position.x - rightEnd);
+            patrolTargetX = distToLeft <= distToRight ? leftEnd : rightEnd;
+
+            StartPatrolTween();
+        }
+    }
+
+    //ÃßÀû ÀÌµ¿. ±âÁ¸ Move()¿¡ ÀÖ´ø velocity ÀÌµ¿ ·ÎÁ÷ ±×´ë·Î °¡Á®¿È
+    void ChaseMove()
+    {
+        float moveDir = player.position.x > transform.position.x ? 1f : -1f;                    // ÇÃ·¹ÀÌ¾î°¡ ¿À¸¥ÂÊÀÌ¸é 1, ¿ŞÂÊÀÌ¸é -1·Î ÃßÀû ¹æÇâ °áÁ¤
+        rb.linearVelocity = new Vector2(moveDir * speed, rb.linearVelocity.y);                             //ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿ÇÏ´Â ·ÎÁ÷
+        anim.SetFloat(speedParam, speed);                                                                                       //¼Óµµ¸¦ ³»¶ó
+        FaceDirection(moveDir);
+
+        if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
+        {
+            // UpdateState¿¡¼­ ÀÌ¹Ì ÀÌ¹ø ÇÁ·¹ÀÓ ·Î±×¸¦ Âï¾úÀ» ¼ö ÀÖ¾î¼­ ½Ã°£ °»½ÅÀº ¾È ÇÏ°í º°µµ·Î ÂïÀ½
+            Debug.Log($"[Skeleton:{name}] ChaseMove ½ÇÇàÁß | moveDir={moveDir} | speed={speed} | °á°ú velocity={rb.linearVelocity}");
+        }
+    }
+
+    //¼øÂû Æ®À© ½ÃÀÛ. patrolTargetX±îÁö DOMoveX·Î ÀÌµ¿½ÃÅ°°í µµÂøÇÏ¸é ¹İ´ëÆíÀ¸·Î µ¹¸²
+    void StartPatrolTween()
+    {
+        KillPatrolTween();                                                                                             //È¤½Ã ³²¾ÆÀÖ´Â Æ®À©ÀÖÀ¸¸é Á¤¸®ÇÏ°í »õ·Î ½ÃÀÛ
+
+        float dist = Mathf.Abs(patrolTargetX - transform.position.x);
+        float duration = patrolSpeed > 0f ? dist / patrolSpeed : 0f;                        //°Å¸®/¼Óµµ·Î °É¸®´Â ½Ã°£ °è»êÇØ¼­ ¼Óµµ°¨ ÀÏÁ¤ÇÏ°Ô À¯Áö
+
+        float moveDir = patrolTargetX > transform.position.x ? 1f : -1f;
+        FaceDirection(moveDir);
+        anim.SetFloat(speedParam, patrolSpeed);                                                        //¼Óµµ¸¦ ³»¶ó
+
+        patrolTween = transform.DOMoveX(patrolTargetX, duration)
+            .SetEase(Ease.Linear)                                                                                   //µî¼ÓÀ¸·Î ¿òÁ÷¿©¾ß ÀÚ¿¬½º·¯¿ò
+            .OnComplete(OnPatrolPointReached);
+    }
+
+    //¿Õº¹ ³¡Á¡¿¡ µµÂøÇßÀ»¶§. Àá±ñ ´ë±âÇÏ°í ¹İ´ëÆíÀ¸·Î ¸ñÇ¥¸¦ ¹Ù²ã¼­ ´Ù½Ã Ãâ¹ß
+    void OnPatrolPointReached()
+    {
+        anim.SetFloat(speedParam, 0f);                                                                             //µµÂøÇÏ¸é Àá±ñ ¸ØÃç¾ß ÀÚ¿¬½º·¯¿ò
+
+        float leftEnd = basePosX - patrolDistance;
+        float rightEnd = basePosX + patrolDistance;
+        patrolTargetX = Mathf.Approximately(patrolTargetX, rightEnd) ? leftEnd : rightEnd;               //´ÙÀ½ ¸ñÇ¥´Â ¹İ´ëÂÊ ³¡
+
+        patrolTween = DOVirtual.DelayedCall(patrolWaitTime, () =>
+        {
+            if (currentState == AIState.Patrol)                                                                     //´ë±âÇÏ´Â µ¿¾È Chase·Î ¹Ù²î¾úÀ¸¸é ´Ù½Ã Ãâ¹ßÇÏ¸é ¾ÈµÊ
+            {
+                StartPatrolTween();
+            }
+        });
+    }
+
+    //¼øÂû Æ®À© Á¤¸®. ChaseÀüÈ¯/»ç¸Á½Ã ¹İµå½Ã È£ÃâÇØÁà¾ß ¸Ş¸ğ¸®¿¡ ¾È³²À½
+    void KillPatrolTween()
+    {
+        if (patrolTween != null && patrolTween.IsActive())
+        {
+            patrolTween.Kill();
+        }
+        patrolTween = null;
+    }
+
+    //°ø°İ
     protected override void Attack()
     {
-        if (isDead) return;                                             //ì£½ìœ¼ë©´ ë
-        if (currentState != AIState.Attack) return;                         //í˜„ì¬ ìƒíƒœê°€ ê³µê²©ì´ ì•„ë‹ˆë©´ ë
-        if (Time.time < lastAttackTime + attackCooldown) return;                                        //ê³µê²© ì¿¨íƒ€ì„ì´ í•´ë‹¹ë˜ì§€ ì•Šìœ¼ë©´ ë
+        if (isDead) return;                                             //Á×À¸¸é ³¡
+        if (currentState != AIState.Attack) return;                         //ÇöÀç »óÅÂ°¡ °ø°İÀÌ ¾Æ´Ï¸é ³¡
+        if (Time.time < lastAttackTime + attackCooldown) return;                                        //°ø°İ ÄğÅ¸ÀÓÀÌ ÇØ´çµÇÁö ¾ÊÀ¸¸é ³¡
 
-        lastAttackTime = Time.time;                                                                     // ë§ˆì§€ë§‰ ê³µê²© ì‹œê°„ì„ í˜„ì¬ ì‹œê°„ìœ¼ë¡œ ê°±ì‹ í•œë‹¤.
-        anim.SetInteger(AttackIndexParam, Random.Range(0, 2));                      // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì„ ëœë¤ìœ¼ë¡œ ì„ íƒí•œë‹¤.
-        anim.SetTrigger(attackTriggerParam);                                                //ê³µê²©ì— íŠ¸ë¦¬ê±°ë¥¼ ì¤€ë‹¤.
+        lastAttackTime = Time.time;                                                                     // ¸¶Áö¸· °ø°İ ½Ã°£À» ÇöÀç ½Ã°£À¸·Î °»½ÅÇÑ´Ù.
+        anim.SetInteger(AttackIndexParam, Random.Range(0, 2));                      // °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ·£´ıÀ¸·Î ¼±ÅÃÇÑ´Ù.
+        anim.SetTrigger(attackTriggerParam);                                                //°ø°İ¿¡ Æ®¸®°Å¸¦ ÁØ´Ù.
+
+        if (debugLog)
+        {
+            Debug.Log($"[Skeleton:{name}] Attack() ½ÇÇàµÊ (Trigger ¹ßµ¿)");
+        }
     }
 
-    //ì‹¤ì œ ë°ë¯¸ì§€ ì²˜ë¦¬í•¨ìˆ˜
+    //½ÇÁ¦ µ¥¹ÌÁö Ã³¸®ÇÔ¼ö
     public void DealDamage()
     {
         if (isDead) return;
         if (player == null) return;
-        if (Vector2.Distance(transform.position, player.position) > attackRange) return;                        // ì• ë‹ˆë©”ì´ì…˜ì´ ì¬ìƒë˜ëŠ” ë™ì•ˆ í”Œë ˆì´ì–´ê°€ ê³µê²© ë²”ìœ„ë¥¼ ë²—ì–´ë‚¬ìœ¼ë©´ ë°ë¯¸ì§€ë¥¼ ì£¼ì§€ ì•ŠëŠ”ë‹¤.
+        if (Vector2.Distance(transform.position, player.position) > attackRange) return;                        // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Àç»ıµÇ´Â µ¿¾È ÇÃ·¹ÀÌ¾î°¡ °ø°İ ¹üÀ§¸¦ ¹ş¾î³µÀ¸¸é µ¥¹ÌÁö¸¦ ÁÖÁö ¾Ê´Â´Ù.
 
-        IDamageable damageable = player.GetComponent<IDamageable>();                                            // í”Œë ˆì´ì–´ê°€ ë°ë¯¸ì§€ë¥¼ ë°›ì„ ìˆ˜ ìˆëŠ”ì§€ í™•ì¸í•œë‹¤.
-        damageable?.TakeDamage(attackPower);                            // ë°ë¯¸ì§€ë¥¼ ì…íŒë‹¤.
+        IDamageable damageable = player.GetComponent<IDamageable>();                                            // ÇÃ·¹ÀÌ¾î°¡ µ¥¹ÌÁö¸¦ ¹ŞÀ» ¼ö ÀÖ´ÂÁö È®ÀÎÇÑ´Ù.
+        damageable?.TakeDamage(attackPower);                            // µ¥¹ÌÁö¸¦ ÀÔÈù´Ù.
     }
 
     protected override float CalculateContactDamage()
@@ -176,6 +290,8 @@ public class Skeleton : Enemy
         if (isDead) return;
         isDead = true;
 
+        KillPatrolTween();                                                                              //Á×À»¶§ ¼øÂû Æ®À© »ì¾ÆÀÖÀ¸¸é ¾ÈµÇ´Ï±î Á¤¸®
+
         anim.SetBool(IsDeadParam, true);
 
         Collider2D col = GetComponent<Collider2D>();
@@ -187,5 +303,10 @@ public class Skeleton : Enemy
     void FinishDeath()
     {
         base.Die();
+    }
+
+    void OnDestroy()
+    {
+        KillPatrolTween();                                                                              //¿ÀºêÁ§Æ® ÆÄ±«µÉ¶§ Æ®À© ³²¾ÆÀÖÀ¸¸é ¿¡·¯³ª´Ï±î Á¤¸®
     }
 }
