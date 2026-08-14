@@ -479,7 +479,7 @@ Transform:
   m_GameObject: {fileID: 371062620}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2083726, y: -0.2589904, z: -33.348255}
+  m_LocalPosition: {x: 10.808943, y: -0.102306426, z: -33.348255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -781,7 +781,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 5.1303396, y: -0.20888042}
+  m_Offset: {x: 5.1303406, y: -0.042306423}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -791,7 +791,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 38.852432, y: 9.479784}
+  m_Size: {x: 38.852432, y: 9.146636}
   m_EdgeRadius: 0
 --- !u!4 &489904637
 Transform:
@@ -3968,37 +3968,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 622256973}
   m_CullTransparentMesh: 1
---- !u!1 &622601121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 622601122}
-  m_Layer: 0
-  m_Name: GroundCheckPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &622601122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622601121}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15, y: -0.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1950730225}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633030708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6557,7 +6526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1879496407
 Transform:
   m_ObjectHideFlags: 0
@@ -6776,17 +6745,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 1879496410}
-    m_ColliderPaths:
-    - - X: 60000000
-        Y: -20000000
-      - X: 30000000
-        Y: -20000000
-      - X: 30000000
-        Y: -26875000
-      - X: 60000000
-        Y: -26875000
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 6, y: -2}
@@ -7306,11 +7265,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!4 &1950730225 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3451755085956530204, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-  m_PrefabInstance: {fileID: 420529997297974771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1992707750
 GameObject:
   m_ObjectHideFlags: 0
@@ -7603,14 +7557,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1468097089132747374, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      propertyPath: chaseRange
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1468097089132747374, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      propertyPath: groundCheckPoint
-      value: 
-      objectReference: {fileID: 622601122}
     - target: {fileID: 3451755085956530204, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.48
@@ -7651,29 +7597,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7162166734360124002, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7162166734360124002, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      propertyPath: m_GravityScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7162166734360124002, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8027223610998033939, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
       propertyPath: m_Name
       value: idle-1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2614459955600960, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3451755085956530204, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 622601122}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b2e057a3272d1b458236c3bc5516631, type: 3}
 --- !u!1660057539 &9223372036854775807
