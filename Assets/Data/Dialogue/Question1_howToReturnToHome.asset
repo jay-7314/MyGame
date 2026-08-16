@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Question1_howToReturnToHome
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC9D1\uC73C\uB85C\uB294 \uC5B4\uB5BB\uAC8C \uB3CC\uC544\uAC00\uC8E0?"
+    choices: []
+  - speaker: {fileID: 11400000, guid: e2ba7739d3b3bea4d8133928e4d2ccb8, type: 2}
+    dialogueText: "\uC9C0\uAE08\uC740 \uAFC8\uC18D\uC774\uC57C. \uB10C \uC774\uBBF8
+      \uC9D1\uC5D0\uC11C \uC790\uACE0\uC788\uC9C0"
+    choices: []
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uADF8 \uB9D0\uC774 \uC544\uB2C8\uC796\uC544\uC694!!\n \uC5B4\uB5BB\uAC8C
+      \uAFC8\uC5D0\uC11C \uAE68\uC11C \uC6D0\uB798 \uC138\uC0C1\uC73C\uB85C \uAC00\uC8E0?"
+    choices: []
+  - speaker: {fileID: 11400000, guid: e2ba7739d3b3bea4d8133928e4d2ccb8, type: 2}
+    dialogueText: "\uC774\uB188\uC774! \uC798 \uC54C\uB824\uC8FC\uB824\uACE0 \uD574\uB3C4
+      \uD654\uB97C \uB0B4\uACE0 \uC788\uB124!!\n\uC548\uC54C\uB824\uC904\uAE4C\uBCF4\uB2E4"
+    choices: []
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC544\uC800\uC528.. \uC5C4\uB9C8\uAC00 \uBCF4\uACE0 \uC2F6\uC5B4\uC694\u3160\u3160
+      \n\uC54C\uB824\uC8FC\uC2DC\uBA74 \uC548\uB420\uAE4C\uC694?"
+    choices: []
+  - speaker: {fileID: 11400000, guid: e2ba7739d3b3bea4d8133928e4d2ccb8, type: 2}
+    dialogueText: "\uD3C9\uC18C\uC5D0\uB294 \uC5C4\uB9C8\uB97C \uC798 \uCC3E\uC9C0
+      \uC54A\uB294 \uB140\uC11D\uC774 \uC9C0\uAE08\uC740 \uC5C4\uB9C8\uBCF4\uACE0
+      \uC2F6\uB2E4\uACE0 \uC5C9\uC5C9 \uAC70\uB9AC\uB124\n\uC810\uC218\uB97C \uC5BB\uC5B4!!
+      \uADF8\uB7EC\uBA74 \uAFC8\uC5D0\uC11C \uAE68\uC11C \uB3CC\uC544\uAC08\uC218
+      \uC788\uC744\uAEBC\uC57C"
+    choices:
+    - choiceText: "\uC810\uC218\uB294 \uBB50\uC8E0?"
+      nextDialogue: {fileID: 11400000, guid: 42219fdd317fb3440a1eb483dc8199f0, type: 2}

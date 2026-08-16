@@ -9,6 +9,7 @@ public class DialogueLine
 
     [TextArea(2, 10)]
     public string dialogueText;         //말하는 공간
+    public DialogueChoice[] choices;
 }
 
 

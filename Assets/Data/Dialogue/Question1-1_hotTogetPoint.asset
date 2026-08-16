@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Question1-1_hotTogetPoint
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC810\uC218\uC694? \uC810\uC218\uAC00 \uBB50\uC8E0?"
+    choices: []
+  - speaker: {fileID: 11400000, guid: e2ba7739d3b3bea4d8133928e4d2ccb8, type: 2}
+    dialogueText: "\uC810\uC218\uB3C4 \uBAB0\uB77C? \uC5BB\uC5B4\uC57C \uD558\uB294
+      \uAC12\uC774\uC796\uC544"
+    choices: []
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uADF8\uB7EC\uB2C8\uAE4C\uC694.. \uADF8 \uC810\uC218\uAC00 \uBB50\uACE0
+      \uC5B4\uB5BB\uAC8C \uC5B4\uB5BB\uAC8C \uC5BB\uB0D0\uACE0\uC694"
+    choices: []
+  - speaker: {fileID: 11400000, guid: e2ba7739d3b3bea4d8133928e4d2ccb8, type: 2}
+    dialogueText: "\uADF8\uB807\uAC8C \uBB3C\uC5B4\uBD24\uC5B4\uC57C\uC9C0.\n\uC5EC\uAE30\uC5D0\uC11C
+      \uC804\uD22C\uB97C \uD558\uB294\uAC70\uC57C. \uADF8\uB7EC\uBA74 \uC810\uC218\uB97C
+      \uC5BB\uC5B4\n\uADF8\uB9AC\uACE0 \uC5EC\uAE30\uC11C \uB098\uAC00\uB294\uAC70\uC9C0"
+    choices:
+    - choiceText: "\uC804\uD22C\uB77C\uB2C8!!"
+      nextDialogue: {fileID: 11400000, guid: 477485f32eb9650419ff10d7ab39e01f, type: 2}

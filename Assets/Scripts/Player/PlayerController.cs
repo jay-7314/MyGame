@@ -151,7 +151,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         MovementPlayer();
-
 #if UNITY_EDITOR
         HandleKeyboardInput();
 #endif

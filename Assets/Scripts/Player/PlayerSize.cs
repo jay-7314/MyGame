@@ -6,6 +6,7 @@ public class PlayerSize : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoadSize;
+        OnSceneLoadSize(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void OnDisable()
@@ -15,7 +16,7 @@ public class PlayerSize : MonoBehaviour
 
     void OnSceneLoadSize(Scene scene, LoadSceneMode mode)
     {
-        if(gameObject.name == "Aren")
+        if (gameObject.CompareTag("Player")) 
         {
             if (scene.name == "Intro")
             {
