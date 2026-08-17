@@ -1890,84 +1890,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877226852}
   m_CullTransparentMesh: 1
---- !u!1 &886294090
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 886294091}
-  - component: {fileID: 886294092}
-  m_Layer: 0
-  m_Name: PlayerCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &886294091
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886294090}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1135232450}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &886294092
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886294090}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &901688747
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,11 +2656,6 @@ CanvasRenderer:
 --- !u!1 &1135232441 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4252122442430149951, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
-  m_PrefabInstance: {fileID: 6414581426049632033}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1135232450 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6496460084307852461, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
   m_PrefabInstance: {fileID: 6414581426049632033}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1138235328
@@ -5228,16 +5145,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7366313531479045726, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 0ce055be140d0624d93ae2ac419155a1, type: 2}
+    - target: {fileID: 6731543647503748871, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6496460084307852461, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 886294091}
+    m_RemovedGameObjects:
+    - {fileID: 6731543647503748871, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 576b64fa9c124f3429e386279cc9ada1, type: 3}
 --- !u!1001 &8242008434583313305

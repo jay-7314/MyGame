@@ -2690,6 +2690,10 @@ MonoBehaviour:
   movespeed: 5
   jumpForce: 11
   coyoteTime: 0.2
+  dashSpeed: 15
+  dashDuration: 0.15
+  dashCooldown: 0.5
+  dashSpriteImage: {fileID: -7848039375673857549, guid: 4a473852e7efe254d88e57d12058ca8f, type: 3}
   playerAttack: {fileID: 0}
 --- !u!4 &532410080
 Transform:

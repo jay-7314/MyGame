@@ -8,7 +8,6 @@ public class PlayerSize : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoadSize;
         OnSceneLoadSize(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
-
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoadSize;
@@ -16,11 +15,15 @@ public class PlayerSize : MonoBehaviour
 
     void OnSceneLoadSize(Scene scene, LoadSceneMode mode)
     {
-        if (gameObject.CompareTag("Player")) 
+        if (gameObject.CompareTag("Player"))
         {
-            if (scene.name == "Intro")
+            if (scene.name == "Intro" && gameObject.name.Contains("Aren"))
             {
                 transform.localScale = new Vector3(2, 2, 1);
+            }
+            else if (scene.name == "Intro")
+            {
+                transform.localScale = new Vector3(3, 3, 1);
             }
             else if (scene.name == "Village")
             {
@@ -38,6 +41,5 @@ public class PlayerSize : MonoBehaviour
                 transform.localScale = new Vector3(2.2f, 2.2f, 2.2f);
             }
         }
-        
     }
 }

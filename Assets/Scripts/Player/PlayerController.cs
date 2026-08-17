@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid;
@@ -13,12 +14,24 @@ public class PlayerController : MonoBehaviour
     bool isJump;
     bool leftHeld;
     bool rightHeld;
+    bool isDashing = false;
+    bool facingLeft = false;
 
     float horizontalMove;
     public LayerMask layerMask;
     public float movespeed;
     public float jumpForce;
     public float coyoteTime = 0.2f;
+
+    [Header("Dash")]
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.15f;
+    public float dashCooldown = 0.5f;
+    private float dashTimer;
+    private float dashCooldownTimer;
+
+    [SerializeField] Sprite dashSpriteImage; // Project 창에서 직접 드래그 연결
+
     private float coyoteTimeCounter;
     private float landingBuffer = 0f;
     private float landingBufferTime = 0.1f;
@@ -31,7 +44,7 @@ public class PlayerController : MonoBehaviour
         rigid = player.GetComponent<Rigidbody2D>();
         sprite = player.GetComponent<SpriteRenderer>();
         anim = player.GetComponent<Animator>();
-        player.GetComponent<Animator>().SetBool("isRun", false);
+        anim.SetBool("isRun", false);
         circleCollider = player.GetComponent<CircleCollider2D>();
         moveLeft = false;
         moveRight = false;
@@ -42,49 +55,14 @@ public class PlayerController : MonoBehaviour
     }
 
     #region 이동 및 버튼 색상 변경 구현
-    public void PushLeftBtn()
-    {
-        leftHeld = true;
-        ApplyMoveState();
-    }
-    public void UnPushLeftBtn()
-    {
-        leftHeld = false;
-        ApplyMoveState();
-    }
-
-    public void ExitLeftBtn()
-    {
-        leftHeld = false;
-        ApplyMoveState();
-    }
-
-    public void EnterLeftBtn()
-    {
-        if (!leftHeld) return;
-        ApplyMoveState();
-    }
-    public void PushRightBtn()
-    {
-        rightHeld = true;
-        ApplyMoveState();
-    }
-    public void UnPushRightBtn()
-    {
-        rightHeld = false;
-        ApplyMoveState();
-    }
-
-    public void ExitRightBtn()
-    {
-        rightHeld = false;
-        ApplyMoveState();
-    }
-    public void EnterRightBtn()
-    {
-        if (!rightHeld) return;
-        ApplyMoveState();
-    }
+    public void PushLeftBtn() { leftHeld = true; ApplyMoveState(); }
+    public void UnPushLeftBtn() { leftHeld = false; ApplyMoveState(); }
+    public void ExitLeftBtn() { leftHeld = false; ApplyMoveState(); }
+    public void EnterLeftBtn() { if (!leftHeld) return; ApplyMoveState(); }
+    public void PushRightBtn() { rightHeld = true; ApplyMoveState(); }
+    public void UnPushRightBtn() { rightHeld = false; ApplyMoveState(); }
+    public void ExitRightBtn() { rightHeld = false; ApplyMoveState(); }
+    public void EnterRightBtn() { if (!rightHeld) return; ApplyMoveState(); }
 
     void ApplyMoveState()
     {
@@ -92,10 +70,11 @@ public class PlayerController : MonoBehaviour
         {
             moveLeft = true;
             moveRight = false;
+            facingLeft = true;
             sprite.flipX = true;
             playerAttack.SetFacing(true);
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-            anim.SetBool("isRun", true);
+            if (!isDashing) anim.SetBool("isRun", true);
             SetButtonAlpha(rightBtn, 0.3f);
             SetButtonAlpha(leftBtn, 1f);
         }
@@ -103,10 +82,11 @@ public class PlayerController : MonoBehaviour
         {
             moveLeft = false;
             moveRight = true;
+            facingLeft = false;
             sprite.flipX = false;
             playerAttack.SetFacing(false);
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-            anim.SetBool("isRun", true);
+            if (!isDashing) anim.SetBool("isRun", true);
             SetButtonAlpha(rightBtn, 1f);
             SetButtonAlpha(leftBtn, 0.3f);
         }
@@ -118,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     void StopMove()
     {
-        anim.SetBool("isRun", false);
+        if (!isDashing) anim.SetBool("isRun", false);
         rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         moveRight = false;
         moveLeft = false;
@@ -141,10 +121,60 @@ public class PlayerController : MonoBehaviour
             isJump = true;
             coyoteTimeCounter = 0f;
             anim.SetInteger("isJump", 1);
-
-            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0f);  //이 부분이 없으면 언덕에서 점프할때 비이상적으로 높게 점프가 됨. 이 기능을 추가하므로써 언제나 일정하게 점프함
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0f);
             rigid.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+    }
+    #endregion
+
+    #region 대쉬
+    public void Dash()
+    {
+        if (isDashing || dashCooldownTimer > 0f) return;
+
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
+
+        // Animator가 매 프레임 sprite를 덮어쓰지 못하게 잠깐 꺼둠
+        anim.enabled = false;
+
+        if (dashSpriteImage != null)
+        {
+            sprite.sprite = dashSpriteImage;
+        }
+    }
+
+    void UpdateDash()
+    {
+        if (dashCooldownTimer > 0f)
+            dashCooldownTimer -= Time.deltaTime;
+
+        if (!isDashing) return;
+
+        dashTimer -= Time.deltaTime;
+
+        float dir = facingLeft ? -1f : 1f;
+        rigid.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+
+        if (dashTimer <= 0f)
+        {
+            EndDash();
+        }
+    }
+
+    void EndDash()
+    {
+        isDashing = false;
+
+        // Animator 다시 켜서 원래 스프라이트 제어권 복구
+        anim.enabled = true;
+
+        // 대시 끝난 시점의 현재 상태(이동중/정지)에 맞게 애니메이션 복원
+        if (moveLeft || moveRight)
+            anim.SetBool("isRun", true);
+        else
+            anim.SetBool("isRun", false);
     }
     #endregion
 
@@ -159,34 +189,32 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     void HandleKeyboardInput()
     {
-        if ( Input.GetKeyDown(KeyCode.LeftArrow))
-            PushLeftBtn();
-        if ( Input.GetKeyUp(KeyCode.LeftArrow))
-            UnPushLeftBtn();
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-            PushRightBtn();
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-            UnPushRightBtn();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            Jump();
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) PushLeftBtn();
+        if (Input.GetKeyUp(KeyCode.LeftArrow)) UnPushLeftBtn();
+        if (Input.GetKeyDown(KeyCode.RightArrow)) PushRightBtn();
+        if (Input.GetKeyUp(KeyCode.RightArrow)) UnPushRightBtn();
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
+        if (Input.GetKeyDown(KeyCode.S)) Dash();
     }
 #endif
 
     void MovementPlayer()
     {
-        if (moveLeft && !moveRight)
-            horizontalMove = -movespeed;
-        else if (moveRight && !moveLeft)
-            horizontalMove = movespeed;
-        else
-            horizontalMove = 0;
+        if (isDashing) return;
+
+        if (moveLeft && !moveRight) horizontalMove = -movespeed;
+        else if (moveRight && !moveLeft) horizontalMove = movespeed;
+        else horizontalMove = 0;
     }
 
     private void FixedUpdate()
     {
-        rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
+        UpdateDash();
+
+        if (!isDashing)
+        {
+            rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
+        }
 
         // 바닥 감지
         Vector2 boxSize = new Vector2(circleCollider.bounds.size.x * 0.9f, 0.5f);
@@ -202,7 +230,7 @@ public class PlayerController : MonoBehaviour
         else
             coyoteTimeCounter -= Time.fixedDeltaTime;
 
-        // 착지 버퍼 갱신 — 하강 중이거나 정지 중일 때만 채움 (아래에서 위로 통과 시 오인식 방지)
+        // 착지 버퍼 갱신
         if (isGround && rigid.linearVelocity.y <= 0f)
             landingBuffer = landingBufferTime;
         else
@@ -219,7 +247,6 @@ public class PlayerController : MonoBehaviour
             else if (rigid.linearVelocity.y < -0.1f)
                 anim.SetInteger("isJump", 2);
 
-            // 착지 버퍼가 남아있고 상승 중이 아닐 때만 착지로 인정
             if (landingBuffer > 0f && rigid.linearVelocity.y <= 0.1f)
             {
                 isJump = false;
@@ -230,6 +257,5 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("isRun", false);
             }
         }
-
     }
 }
