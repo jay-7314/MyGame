@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MapSelect : MonoBehaviour
@@ -8,7 +8,7 @@ public class MapSelect : MonoBehaviour
     public void OnMouseDown()
     {
         SceneManager.LoadScene(stageName.name);
-        Debug.Log("≈¨∏Øµ ");
+        Debug.Log("ÌÅ¥Î¶≠Îê®");
     }
 
 }
