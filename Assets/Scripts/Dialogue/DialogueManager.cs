@@ -1,7 +1,8 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -18,9 +19,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject choicePanel;
     [SerializeField] Button choiceButtonPrefab;
 
-    DialogueData currentDialogueData;                           //ÇöÀç ´ë»ç µ¥ÀÌÅÍ
-    int currentIndex;                                                          //ÇöÀç ´ë»ç ÀÎµ¦½º
-    Action onEndCallback;                                                //´ë»ç Á¾·á½Ã È£ÃâÇÒ ÄÝ¹é??
+    DialogueData currentDialogueData;                           //í˜„ìž¬ ëŒ€ì‚¬ ë°ì´í„°
+    int currentIndex;                                                          //í˜„ìž¬ ëŒ€ì‚¬ ì¸ë±ìŠ¤
+    Action onEndCallback;                                                //ëŒ€ì‚¬ ì¢…ë£Œì‹œ í˜¸ì¶œí•  ì½œë°±??
     public bool isDialogueCheck { get; private set; }
 
 
@@ -38,8 +39,13 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(DialogueData data, Action onEnd = null)
     {
+        StartDialogue(data, 0, onEnd);
+    }
+
+    public void StartDialogue(DialogueData data, int startIndex, Action onEnd = null)
+    {
         currentDialogueData = data;
-        currentIndex = 0;
+        currentIndex = startIndex;
         onEndCallback = onEnd;
         isDialogueCheck = true;
         talkUI.SetActive(true);
@@ -50,9 +56,15 @@ public class DialogueManager : MonoBehaviour
     {
         if (!isDialogueCheck) return;
 
-        // ÇöÀç ÁÙÀÌ ¼±ÅÃÁö ÁÙÀÌ¸é ¹«½Ã (¹öÆ°À¸·Î¸¸ ÁøÇà)
         DialogueLine currentLine = currentDialogueData.lines[currentIndex];
         if (currentLine.choices != null && currentLine.choices.Length > 0) return;
+
+        if (currentLine.isNextScene)
+        {
+            EndDialogue();
+            GoToNextScene("Map"); // ì›í•˜ì‹œëŠ” ì”¬ ì´ë¦„
+            return;
+        }
 
         currentIndex++;
         if (currentIndex >= currentDialogueData.lines.Length)
@@ -92,7 +104,7 @@ public class DialogueManager : MonoBehaviour
         }
         dialogue.text = line.dialogueText;
 
-        // ÀÌ ÁÙ¿¡ ¼±ÅÃÁö°¡ ÀÖÀ¸¸é ¹öÆ° Ç¥½Ã, ¾øÀ¸¸é ¼±ÅÃÁö Ã¢ ²ô±â
+        // ì´ ì¤„ì— ì„ íƒì§€ê°€ ìžˆìœ¼ë©´ ë²„íŠ¼ í‘œì‹œ, ì—†ìœ¼ë©´ ì„ íƒì§€ ì°½ ë„ê¸°
         if (line.choices != null && line.choices.Length > 0)
         {
             ShowChoices(line.choices);
@@ -126,12 +138,14 @@ public class DialogueManager : MonoBehaviour
 
     void SetActive(Image img)
     {
-        img.DOColor(Color.white, 0.2f);
+        img.DOKill();
+        img.color = Color.white;
     }
 
     void SetInactive(Image img)
     {
-        img.DOColor(new Color(0.5f, 0.5f, 0.5f), 0.2f);
+        img.DOKill();
+        img.color = new Color(0.5f, 0.5f, 0.5f);
     }
 
     void EndDialogue()
@@ -166,5 +180,10 @@ public class DialogueManager : MonoBehaviour
     {
         choicePanel.SetActive(false);
         StartDialogue(choice.nextDialogue, onEndCallback);
+    }
+
+    public void GoToNextScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

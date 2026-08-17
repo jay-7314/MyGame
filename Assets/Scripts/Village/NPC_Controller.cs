@@ -8,7 +8,9 @@ public class NPC_Controller : MonoBehaviour
     SpriteRenderer sp;
     DOTweenPath dotweenpath;
     public float stopTiming;
-
+    [SerializeField] DialogueData dialogue_PlayerNPC;
+    [SerializeField] int repeatStartIndex = 8;
+    bool hasTalkedBefore = false;
     bool playerInRange = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -55,6 +57,13 @@ public class NPC_Controller : MonoBehaviour
             anim.SetBool("isWalk", true);
             dotweenpath.tween.Play();
         });
+    }
+
+    public void Talk()
+    {
+        int startIndex = hasTalkedBefore ? repeatStartIndex : 0;
+        hasTalkedBefore = true;
+        DialogueManager.instance.StartDialogue(dialogue_PlayerNPC, startIndex);
     }
 
 

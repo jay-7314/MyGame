@@ -11,11 +11,4 @@ public class MapSelect : MonoBehaviour
         Debug.Log("Å¬¸¯µÊ");
     }
 
-
-
-    //public void ()
-    //{
-    //    SceneManager.LoadScene(stageName.name);
-    //    Debug.Log("Å¬¸¯µÊ");
-    //}
 }

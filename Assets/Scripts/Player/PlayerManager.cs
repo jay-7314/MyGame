@@ -7,7 +7,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] DialogueData introDialogue;
     [SerializeField] DialogueData playerTonpc;
     [SerializeField] NPC_Controller npcController;
-    bool isTalk = false;
 
     private void Start()
     {
@@ -22,10 +21,9 @@ public class PlayerManager : MonoBehaviour
 
     public void TalkToNpc()
     {
-        if (npcController.IsPlayerInRange() && !isTalk)
+        if (npcController.IsPlayerInRange())
         {
-            DialogueManager.instance.StartDialogue(playerTonpc);
-            isTalk = true;
+            npcController.Talk();
         }
     }
 }

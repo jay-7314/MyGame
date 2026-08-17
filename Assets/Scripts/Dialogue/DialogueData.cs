@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 //대사 한줄짜리 하기 위한 class
@@ -9,7 +11,9 @@ public class DialogueLine
 
     [TextArea(2, 10)]
     public string dialogueText;         //말하는 공간
+   
     public DialogueChoice[] choices;
+    public bool isNextScene = false;
 }
 
 
@@ -19,3 +23,4 @@ public class DialogueData : ScriptableObject
 {
     public DialogueLine[] lines;
 }
+
