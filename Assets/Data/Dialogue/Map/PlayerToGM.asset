@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: PlayerToGM
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uB4E4\uC5B4\uC624\uB77C\uACE0 \uD574\uC11C \uC77C\uB2E8 \uB4E4\uC5B4\uC654\uB294\uB370
+      \uC774 \uC5B4\uB450\uCEF4\uCEF4\uD55C\uACF3\uC740 \uBB50\uC57C? \uC800 \uB0A0\uB77C\uB2E4\uB2C8\uB294
+      \uD574\uACE8\uC740 \uB610 \uBB50\uACE0.."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC548\uB155~\n\uB108\uAC00 \uC774\uBC88\uC5D0 \uB4E4\uC5B4\uC628
+      \uC2E0\uC785\uC774\uAD6C\uB098?"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uB10C \uB204\uAD6C\uC57C? \uC5BC\uAD74\uB3C4 \uC548\uBCF4\uC774\uACE0
+      \uC788\uACE0..\n\uC544! \uB108\uAC00 \uC544\uC800\uC528\uAC00 \uB9D0\uD55C
+      \uC0AC\uB78C\uC774\uC57C?"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC544\uC800\uC528\uAC00 \uB9D0\uD55C\uC0AC\uB78C? \n\uC544\uC800\uC528\uAC00
+      \uB204\uAD70\uC9C0\uB294 \uBAA8\uB974\uACA0\uB294\uB370, \uB0B4\uAC00 \uB3C4\uC640\uC8FC\uB294
+      \uC0AC\uB78C\uC740 \uB9DE\uC544."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uADF8\uB098\uC800\uB098 \uC5EC\uAE34 \uC5B4\uB514\uC57C?\n\uC800
+      \uB465\uB465 \uB5A0\uB2E4\uB2C8\uB294 \uD574\uACE8\uC740 \uB610 \uBB50\uACE0"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uD574\uACE8\uC774\uB77C\uB2C8.. \uB0B4\uAC00 \uD798\uB4E4\uAC8C
+      \uB9CC\uB4E0 \uC544\uC774\uC778\uB370..\n\uB0B4\uAC00 \uC54C\uAE30\uB85C\uB294
+      \uB108\uAC00 \uAC8C\uC784\uC744 \uC870\uAE08 \uD588\uB2E4\uACE0 \uC54C\uACE0
+      \uC788\uB294\uB370?\n\uC77C\uC885\uC758 Stage\uB85C \uC0DD\uAC01\uD558\uBA74
+      \uB41C\uB2E8\uB2E4."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "Stage\uB77C\uB2C8.. \uB3C4\uB300\uCCB4 \uBA87\uAC1C\uB97C \uAE68\uC57C\uD558\uB294\uAC70\uC57C..\n\uB09C
+      \uBE68\uB9AC \uC7A0\uC5D0\uC11C \uAE68\uACE0 \uC2F6\uB2E4\uACE0.."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC77C\uB2E8 \uC67C\uCABD \uC544\uB798\uC758 Stage\uAC00 \uAC00\uC7A5
+      \uAC04\uB2E8\uD55C\uAC70\uB2C8\uAE4C \uC77C\uB2E8 \uADF8\uAC70\uB098 \uB4E4\uC5B4\uAC00\uBD10"
+    choices: []
+    isNextScene: 0
+  requiredFlags: 
+  blockedIfFlags: 01000000
+  priority: 0

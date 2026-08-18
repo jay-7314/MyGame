@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using DG.Tweening;
 
 public class Skeleton : Enemy
@@ -99,7 +99,7 @@ public class Skeleton : Enemy
         if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
         {
             lastDebugLogTime = Time.time;
-            Debug.Log($"[Skeleton:{name}] dist={dist:F2} | chaseRange={chaseRange} | attackRange={attackRange} | State={currentState} | pos={transform.position.x:F2} | playerPos={player.position.x:F2} | velocity={(rb != null ? rb.linearVelocity : Vector2.zero)}");
+            //Debug.Log($"[Skeleton:{name}] dist={dist:F2} | chaseRange={chaseRange} | attackRange={attackRange} | State={currentState} | pos={transform.position.x:F2} | playerPos={player.position.x:F2} | velocity={(rb != null ? rb.linearVelocity : Vector2.zero)}");
         }
         // ======================
     }

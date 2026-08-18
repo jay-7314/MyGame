@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
         }
         instance = this;
         talkUI.SetActive(false);
-        choicePanel.SetActive(false);
+        if (choicePanel != null) choicePanel.SetActive(false);
     }
 
     public void StartDialogue(DialogueData data, Action onEnd = null)
@@ -83,36 +83,49 @@ public class DialogueManager : MonoBehaviour
 
         speakerName.text = line.speaker.speakerName;
         bool isTwoSpeakers = HasMultiSpeaker();
+        bool hasImg = line.speaker.speakerImg != null;
 
         if (line.speaker.speakerType == SpeakerData.SpeakerType.Player)
         {
-            leftCharacterImg.sprite = line.speaker.speakerImg;
-            leftCharacterImg.gameObject.SetActive(true);
-            rightCharacterImg.gameObject.SetActive(isTwoSpeakers);
-
-            SetActive(leftCharacterImg);
-            if (isTwoSpeakers) SetInactive(rightCharacterImg);
+            if (leftCharacterImg != null)
+            {
+                leftCharacterImg.gameObject.SetActive(hasImg);
+                if (hasImg)
+                {
+                    leftCharacterImg.sprite = line.speaker.speakerImg;
+                    SetActive(leftCharacterImg);
+                }
+            }
+            if (rightCharacterImg != null)
+            {
+                rightCharacterImg.gameObject.SetActive(isTwoSpeakers);
+                if (isTwoSpeakers) SetInactive(rightCharacterImg);
+            }
         }
         else
         {
-            rightCharacterImg.sprite = line.speaker.speakerImg;
-            rightCharacterImg.gameObject.SetActive(true);
-            leftCharacterImg.gameObject.SetActive(isTwoSpeakers);
-
-            SetActive(rightCharacterImg);
-            if (isTwoSpeakers) SetInactive(leftCharacterImg);
+            if (rightCharacterImg != null)
+            {
+                rightCharacterImg.gameObject.SetActive(hasImg);
+                if (hasImg)
+                {
+                    rightCharacterImg.sprite = line.speaker.speakerImg;
+                    SetActive(rightCharacterImg);
+                }
+            }
+            if (leftCharacterImg != null)
+            {
+                leftCharacterImg.gameObject.SetActive(isTwoSpeakers);
+                if (isTwoSpeakers) SetInactive(leftCharacterImg);
+            }
         }
+
         dialogue.text = line.dialogueText;
 
-        // 이 줄에 선택지가 있으면 버튼 표시, 없으면 선택지 창 끄기
         if (line.choices != null && line.choices.Length > 0)
-        {
             ShowChoices(line.choices);
-        }
-        else
-        {
+        else if (choicePanel != null)
             choicePanel.SetActive(false);
-        }
     }
 
     bool HasMultiSpeaker()
@@ -179,7 +192,21 @@ public class DialogueManager : MonoBehaviour
     void OnChoiceClicked(DialogueChoice choice)
     {
         choicePanel.SetActive(false);
-        StartDialogue(choice.nextDialogue, onEndCallback);
+
+        if (choice.setFlagOnSelect != GameFlagKey.None && GameFlags.instance != null)
+            GameFlags.instance.setFlag(choice.setFlagOnSelect);
+
+        if (choice.isNextScene)
+        {
+            EndDialogue();
+            GoToNextScene("Map");
+            return;
+        }
+
+        if (choice.nextDialogue != null)
+            StartDialogue(choice.nextDialogue, onEndCallback);
+        else
+            EndDialogue();
     }
 
     public void GoToNextScene(string sceneName)

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Dialogue_MapSkip
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 668323d6f257d9d4ca9a36d9c39140f5, type: 2}
+    dialogueText: "\uB9F5\uC744 \uACE0\uB974\uB294 \uBD80\uBD84\uC5D0\uC11C \uC2A4\uD06C\uB9BD\uD2B8\uB97C
+      \uC2A4\uD0B5\uD560\uAE4C\uC694?"
+    choices:
+    - choiceText: "\uB124"
+      nextDialogue: {fileID: 0}
+      setFlagOnSelect: 1
+      isNextScene: 1
+    - choiceText: "\uC544\uB2C8\uC694"
+      nextDialogue: {fileID: 11400000, guid: c2643f68b21c20f49bd137ce3a45f790, type: 2}
+      setFlagOnSelect: 0
+      isNextScene: 1
+    isNextScene: 0
+  requiredFlags: 
+  priority: 0

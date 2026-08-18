@@ -7,7 +7,8 @@ public class SpeakerData : ScriptableObject
     public enum SpeakerType
     {
         Player,
-        Npc
+        Npc,
+        GM
     }
 
     public string speakerId;

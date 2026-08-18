@@ -23,5 +23,10 @@ MonoBehaviour:
       \uC788\uC5B4\uC57C\uC9C0!! \uC554\n\uAC14\uB2E4\uC640\uC11C \uB610 \uBCF4\uC790\uACE0\n\n\uC544\uC9C1
       \uB0B4 \uB9D0\uC774 \uBC14\uB00C\uC9C4 \uC54A\uACA0\uC9C0\uB9CC \uB180\uB798\uC9C0\uB294
       \uB9D0\uACE0 "
-    choices: []
-    isNextScene: 1
+    choices:
+    - choiceText: "\uB300\uD654 \uC2A4\uD0B5"
+      nextDialogue: {fileID: 11400000, guid: 8fd3f42e1d0479f48bfd20eab1b4ad1a, type: 2}
+      setFlagOnSelect: 0
+    isNextScene: 0
+  requiredFlags: 
+  priority: 0

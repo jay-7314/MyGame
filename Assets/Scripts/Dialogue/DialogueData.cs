@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,5 +22,8 @@ public class DialogueLine
 public class DialogueData : ScriptableObject
 {
     public DialogueLine[] lines;
+    public GameFlagKey[] requiredFlags;
+    public GameFlagKey[] blockedIfFlags;
+    public int priority = 0;
 }
 
