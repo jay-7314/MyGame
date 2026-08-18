@@ -54,6 +54,7 @@ public class Character_Select : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (!enabled) return;
         CharacterSelect();
         CharacterChange();
     }

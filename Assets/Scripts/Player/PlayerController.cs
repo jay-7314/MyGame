@@ -58,11 +58,11 @@ public class PlayerController : MonoBehaviour
     public void PushLeftBtn() { leftHeld = true; ApplyMoveState(); }
     public void UnPushLeftBtn() { leftHeld = false; ApplyMoveState(); }
     public void ExitLeftBtn() { leftHeld = false; ApplyMoveState(); }
-    public void EnterLeftBtn() { if (!leftHeld) return; ApplyMoveState(); }
+    public void EnterLeftBtn() { leftHeld = true; ApplyMoveState(); }
     public void PushRightBtn() { rightHeld = true; ApplyMoveState(); }
     public void UnPushRightBtn() { rightHeld = false; ApplyMoveState(); }
     public void ExitRightBtn() { rightHeld = false; ApplyMoveState(); }
-    public void EnterRightBtn() { if (!rightHeld) return; ApplyMoveState(); }
+    public void EnterRightBtn() { rightHeld = true; ApplyMoveState(); }
 
     void ApplyMoveState()
     {
