@@ -9,15 +9,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (GameObject.FindWithTag("Player") == null)
         {
-            Vector3 spawnPos = Vector3.zero;
-            Quaternion spawnRot = Quaternion.identity;
-            GameObject spawnPoint = GameObject.FindWithTag("SpawnPoint");
-            if (spawnPoint != null)
-            {
-                spawnPos = spawnPoint.transform.position;
-                spawnRot = spawnPoint.transform.rotation;
-            }
-            var player = Instantiate(playerPrefabs, spawnPos, spawnRot);
+            var player = Instantiate(playerPrefabs, transform.position, transform.rotation);
             DontDestroyOnLoad(player);
         }
 

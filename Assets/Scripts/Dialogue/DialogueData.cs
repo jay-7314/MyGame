@@ -24,6 +24,7 @@ public class DialogueData : ScriptableObject
     public DialogueLine[] lines;
     public GameFlagKey[] requiredFlags;
     public GameFlagKey[] blockedIfFlags;
+    public bool hideInactiveSpeaker = false;
     public int priority = 0;
 }
 

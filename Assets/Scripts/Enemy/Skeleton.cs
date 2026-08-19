@@ -3,6 +3,7 @@ using DG.Tweening;
 
 public class Skeleton : Enemy
 {
+    #region 매개변수
     enum AIState
     {
         Patrol,
@@ -23,6 +24,7 @@ public class Skeleton : Enemy
 
     //애니메이션 및 공격관련
     [SerializeField] Animator anim;                                          //애니메이션 가져오기
+    [SerializeField] Transform healthBarTransform;
     [SerializeField] float attackCooldown = 1.5f;                       //공격 쿨다운
     [SerializeField] float dieDestroyDeley = 1f;                         //죽는 시간
 
@@ -50,10 +52,13 @@ public class Skeleton : Enemy
     static readonly int HitTriggerParam = Animator.StringToHash("HitTrigger");
     static readonly int IsDeadParam = Animator.StringToHash("isDead");
 
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();  // Rigidbody2D를 가져온다.
+      
     }
 
     void Start()
@@ -94,14 +99,6 @@ public class Skeleton : Enemy
         }
 
         currentState = newState;
-
-        // ===== 디버그 로그 =====
-        if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
-        {
-            lastDebugLogTime = Time.time;
-            //Debug.Log($"[Skeleton:{name}] dist={dist:F2} | chaseRange={chaseRange} | attackRange={attackRange} | State={currentState} | pos={transform.position.x:F2} | playerPos={player.position.x:F2} | velocity={(rb != null ? rb.linearVelocity : Vector2.zero)}");
-        }
-        // ======================
     }
 
     // 스프라이트를 좌우 반전시켜 이동 방향을 시각적으로 표현한다.
@@ -110,6 +107,14 @@ public class Skeleton : Enemy
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+
+        // 체력바는 부모 반전의 영향을 받지 않도록 반대로 한번 더 뒤집어줌
+        if (healthBarTransform != null)
+        {
+            Vector3 hbScale = healthBarTransform.localScale;
+            hbScale.x *= -1;
+            healthBarTransform.localScale = hbScale;
+        }
     }
 
     //이동 방향 보고 필요할때만 반전시키는 함수. Chase랑 Patrol 둘다 써서 따로 뺌

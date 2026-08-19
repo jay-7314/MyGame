@@ -8,7 +8,8 @@ public class SpeakerData : ScriptableObject
     {
         Player,
         Npc,
-        GM
+        GM,
+        Monster
     }
 
     public string speakerId;

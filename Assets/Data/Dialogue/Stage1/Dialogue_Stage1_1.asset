@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Dialogue_Stage1_1
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC774\uC81C \uC2A4\uD14C\uC774\uC9C01\uC5D0 \uB4E4\uC5B4\uC654\uB124\n\uC5B4\uCA0C\uB358
+      \uCCAB \uC804\uD22C\uACA0\uB2E4."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC5B4\uD6C4.. \uCCAB \uC804\uD22C\uB77C\uB2C8.. \uB09C \uC544\uC9C1
+      \uB5A8\uB9AC\uB2E4\uB2C8\uAE4C?"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uB9C8\uC744\uC5D0\uC11C \uCE7C\uC9C8\uD558\uACE0 \uB300\uC26C\uD558\uBA74\uC11C
+      \uB180\uC558\uB358\uAC74 \uAE30\uC5B5 \uC548\uB098\uB098\uBCF4\uB124?\n\uC810\uD504\uB825\uB3C4
+      \uB9D0\uC774 \uC548\uB418\uAC8C \uB192\uC9C0 \uC54A\uB514? \n\uAFC8\uC18D\uC774\uB77C\uC11C
+      \uAD1C\uCC2E\uD0C0\uB2C8\uAE4C?"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: f5872cd84883ffb4d97d10c3c28c6067, type: 2}
+    dialogueText: "\uCF08\uCF08\uCF08..."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC800\uAC74 \uB610 \uBB50\uC57C!! \uC800\uAC8C \uB9D0\uC774 \uB418\uB294\uAC70\uC57C?
+      \uB098 \uC5B4\uB5BB\uAC8C \uD574\uC57C \uB098\uAC08\uC218 \uC788\uC5B4?"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC800\uAC70 \uD55C\uBC88 \uC7A1\uC544\uBCF4\uB358\uAC00? \uADF8\uB7EC\uBA74
+      \uBC29\uBC95\uC774 \uC788\uC744\uC9C0\uB3C4 \uBAA8\uB974\uC9C0"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC800\uB807\uAC8C \uBB34\uC2DC\uBB34\uC2DC\uD55C \uB140\uC11D\uC744
+      \uC5B4\uB5BB\uAC8C \uC7A1\uC73C\uB77C\uACE0..\n\uC73C\uC73C..."
+    choices: []
+    isNextScene: 0
+  requiredFlags: 
+  blockedIfFlags: 
+  hideInactiveSpeaker: 1
+  priority: 0

@@ -82,10 +82,12 @@ public class DialogueManager : MonoBehaviour
         if (line.speaker == null) return;
 
         speakerName.text = line.speaker.speakerName;
-        bool isTwoSpeakers = HasMultiSpeaker();
         bool hasImg = line.speaker.speakerImg != null;
+        bool isPlayer = line.speaker.speakerType == SpeakerData.SpeakerType.Player;
+        bool hideInactive = currentDialogueData.hideInactiveSpeaker;
+        bool isTwoSpeakers = !hideInactive && HasMultiSpeaker(); // hideInactive면 아예 계산 안 해도 됨
 
-        if (line.speaker.speakerType == SpeakerData.SpeakerType.Player)
+        if (isPlayer)
         {
             if (leftCharacterImg != null)
             {
@@ -98,8 +100,15 @@ public class DialogueManager : MonoBehaviour
             }
             if (rightCharacterImg != null)
             {
-                rightCharacterImg.gameObject.SetActive(isTwoSpeakers);
-                if (isTwoSpeakers) SetInactive(rightCharacterImg);
+                if (hideInactive)
+                {
+                    rightCharacterImg.gameObject.SetActive(false);
+                }
+                else
+                {
+                    rightCharacterImg.gameObject.SetActive(isTwoSpeakers);
+                    if (isTwoSpeakers) SetInactive(rightCharacterImg);
+                }
             }
         }
         else
@@ -115,8 +124,15 @@ public class DialogueManager : MonoBehaviour
             }
             if (leftCharacterImg != null)
             {
-                leftCharacterImg.gameObject.SetActive(isTwoSpeakers);
-                if (isTwoSpeakers) SetInactive(leftCharacterImg);
+                if (hideInactive)
+                {
+                    leftCharacterImg.gameObject.SetActive(false);
+                }
+                else
+                {
+                    leftCharacterImg.gameObject.SetActive(isTwoSpeakers);
+                    if (isTwoSpeakers) SetInactive(leftCharacterImg);
+                }
             }
         }
 
@@ -126,6 +142,18 @@ public class DialogueManager : MonoBehaviour
             ShowChoices(line.choices);
         else if (choicePanel != null)
             choicePanel.SetActive(false);
+    }
+
+    void SetActive(Image img)
+    {
+        img.DOKill();
+        img.color = Color.white;
+    }
+
+    void SetInactive(Image img)
+    {
+        img.DOKill();
+        img.color = new Color(0.5f, 0.5f, 0.5f);
     }
 
     bool HasMultiSpeaker()
@@ -147,18 +175,6 @@ public class DialogueManager : MonoBehaviour
             if (hasPlayer && hasNPC) return true;
         }
         return false;
-    }
-
-    void SetActive(Image img)
-    {
-        img.DOKill();
-        img.color = Color.white;
-    }
-
-    void SetInactive(Image img)
-    {
-        img.DOKill();
-        img.color = new Color(0.5f, 0.5f, 0.5f);
     }
 
     void EndDialogue()
