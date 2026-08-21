@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] Collider2D hitboxCollider;
@@ -22,14 +23,6 @@ public class PlayerAttack : MonoBehaviour
         hitboxCollider.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            Debug.Log($"{collision.name}에게 데미지{damage}를 입혔습니다.");
-        }
-    }
-
     private void Update()
     {
 #if UNITY_EDITOR
@@ -44,21 +37,14 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         if (isAttacking) return; // 공격 중이면 무시 (선택 사항)
-
         int rand = Random.Range(0, 2);
         anim.SetTrigger(rand == 0 ? "Attack" : "Attack1");
     }
 
     public void SetFacing(bool facingLeft)
     {
-        if (hitboxCollider.enabled) return;
-        if (facingLeft)
-        {
-            hitboxCollider.transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else
-        {
-            hitboxCollider.transform.localScale = new Vector3(1, 1, 1);
-        }
+        Vector3 scale = hitboxCollider.transform.localScale;
+        scale.x = facingLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+        hitboxCollider.transform.localScale = scale;
     }
 }

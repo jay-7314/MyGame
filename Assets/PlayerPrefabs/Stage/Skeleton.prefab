@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1218681750102331768}
   - component: {fileID: 1850340979688995730}
+  - component: {fileID: 8724383565128207804}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -164,6 +165,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8724383565128207804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3682940699905199459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbf3449208548e4692b9c5fa5f470b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
+  slider: {fileID: 1850340979688995730}
+  enemy: {fileID: 1468097089132747374}
 --- !u!1 &3921135297123068650
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +236,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -613,11 +628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42fd15823ee02f748a0ea09c45f6021c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skeleton
-  maxHealth: 1
+  maxHealth: 100
   speed: 1
   attackPower: 0
   enemyTalk: 
-  chaseRange: 2
+  chaseRange: 1
   attackRange: 1
   patrolDistance: 2
   patrolSpeed: 2
@@ -625,7 +640,7 @@ MonoBehaviour:
   anim: {fileID: 5892574958604143597}
   healthBarTransform: {fileID: 1218681750102331768}
   attackCooldown: 1.5
-  dieDestroyDeley: 1
+  dieDestroyDeley: 2
   debugLog: 1
   debugLogInterval: 0.5
 --- !u!70 &4011691041150994778

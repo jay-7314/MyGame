@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5427269883187134308}
   - component: {fileID: -3379866751503092912}
   - component: {fileID: 4989657326303206610}
-  - component: {fileID: 3344310507221613949}
+  - component: {fileID: 5845492046027632008}
   m_Layer: 0
   m_Name: Aren
   m_TagString: Player
@@ -243,7 +243,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.05, y: -0.4}
   m_Radius: 0.11728221
---- !u!114 &3344310507221613949
+--- !u!114 &5845492046027632008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,6 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5166029930866828337}
   - component: {fileID: 3372131125836130844}
+  - component: {fileID: 505297326735120939}
   m_Layer: 0
   m_Name: AttackHitBox
   m_TagString: Untagged
@@ -438,6 +439,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.55279136, y: 0.26820397}
   m_EdgeRadius: 0
+--- !u!114 &505297326735120939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5233989103966173528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c045ab3b0d2bb3d4687ecb5b33331e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  damage: 10
 --- !u!1 &5599268268026219799
 GameObject:
   m_ObjectHideFlags: 0

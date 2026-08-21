@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sprite;
     Animator anim;
     CircleCollider2D circleCollider;
+    PlayerAttack playerAttack;
     public Image leftBtn, rightBtn;
     bool moveLeft;
     bool moveRight;
@@ -36,8 +37,6 @@ public class PlayerController : MonoBehaviour
     private float landingBuffer = 0f;
     private float landingBufferTime = 0.1f;
 
-    [SerializeField] PlayerAttack playerAttack;
-
     private void Awake()
     {
         GameObject player = GameObject.FindWithTag("Player");
@@ -45,13 +44,13 @@ public class PlayerController : MonoBehaviour
         sprite = player.GetComponent<SpriteRenderer>();
         anim = player.GetComponent<Animator>();
         anim.SetBool("isRun", false);
+        playerAttack = player.GetComponent<PlayerAttack>();
         circleCollider = player.GetComponent<CircleCollider2D>();
         moveLeft = false;
         moveRight = false;
         isJump = false;
         leftHeld = false;
         rightHeld = false;
-        playerAttack = player.GetComponentInChildren<PlayerAttack>();
     }
 
     #region 이동 및 버튼 색상 변경 구현

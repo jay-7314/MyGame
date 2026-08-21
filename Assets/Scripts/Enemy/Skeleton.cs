@@ -61,10 +61,12 @@ public class Skeleton : Enemy
       
     }
 
-    void Start()
+    protected override void Start()
     {
-        basePosX = transform.position.x;                                    //스폰된 위치를 순찰 기준점으로 저장
-        patrolTargetX = basePosX + patrolDistance;                //일단 오른쪽 끝을 목표로 시작
+        base.Start();   // Enemy의 OnHealthChanged 호출을 반드시 같이 실행해줘야 함
+
+        basePosX = transform.position.x;
+        patrolTargetX = basePosX + patrolDistance;
     }
 
     //몬스터 상태 변경
@@ -136,11 +138,6 @@ public class Skeleton : Enemy
         //상태가 바뀐 프레임에만 트윈 정지/재시작 처리. 매프레임 체크하면 낭비라 이렇게함
         if (currentState != previousState)
         {
-            if (debugLog)
-            {
-                Debug.Log($"[Skeleton:{name}] ★상태전환★ {previousState} -> {currentState}");
-            }
-
             OnStateChanged(previousState, currentState);
             previousState = currentState;
         }
@@ -256,10 +253,8 @@ public class Skeleton : Enemy
         anim.SetInteger(AttackIndexParam, Random.Range(0, 2));                      // 공격 애니메이션을 랜덤으로 선택한다.
         anim.SetTrigger(attackTriggerParam);                                                //공격에 트리거를 준다.
 
-        if (debugLog)
-        {
-            Debug.Log($"[Skeleton:{name}] Attack() 실행됨 (Trigger 발동)");
-        }
+        Debug.Log("스켈레톤 공격");
+   
     }
 
     //실제 데미지 처리함수
@@ -295,8 +290,9 @@ public class Skeleton : Enemy
         if (isDead) return;
         isDead = true;
 
-        KillPatrolTween();                                                                              //죽을때 순찰 트윈 살아있으면 안되니까 정리
+        KillPatrolTween();
 
+        // 물리 이동 완전히 정지 (죽는 도중에도 velocity가 남아있으면 애니메이션이 밀리거나 씹힘)
         anim.SetBool(IsDeadParam, true);
 
         Collider2D col = GetComponent<Collider2D>();

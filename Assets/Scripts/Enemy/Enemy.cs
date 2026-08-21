@@ -16,12 +16,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected Transform player;                                                             //플레이어 위치 파악
 
     public event Action<Enemy> OnDeath;                                             //죽은 상태를 다른 컴포넌트도 알수있게 조치
+    public event Action<float, float> OnHealthChanged;
     public float healthRatio => currentHealth / maxHealth;                     //체력 비율을 계산
 
 
     protected virtual void Awake()
     {
         currentHealth = maxHealth;   // 시작할 때 현재 체력을 최대 체력으로 초기화
+    }
+    protected virtual void Start()
+    {
+        // 체력바가 시작할 때부터 꽉 찬 상태로 보이도록 최초 1회 알림
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     protected virtual void Update()
@@ -39,10 +45,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Attack();
     }
 
-    public virtual void TakeDamage(float damage)                //공격받는거
+    public virtual void TakeDamage(float damage)
     {
-        if (currentHealth <= 0) return;                                     //체력이 0이면 공격못받음
+        if (currentHealth <= 0) return;
         currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);   // 음수로 안 내려가게 보정
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);   // 체력 변화 알림
+
         if (currentHealth <= 0)
         {
             Die();
