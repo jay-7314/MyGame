@@ -27,6 +27,8 @@ public class Skeleton : Enemy
     [SerializeField] Transform healthBarTransform;
     [SerializeField] float attackCooldown = 1.5f;                       //공격 쿨다운
     [SerializeField] float dieDestroyDeley = 1f;                         //죽는 시간
+    [SerializeField] Collider2D attackHitbox;
+
 
     // ===== 디버그용 =====
     [Header("Debug")]
@@ -44,13 +46,14 @@ public class Skeleton : Enemy
     Tween patrolTween;                                                              //순찰중인 트윈을 들고있어야 Chase전환시 죽일수있음
     float basePosX;                                                                        //순찰 왕복의 기준이 되는 시작 x좌표
     float patrolTargetX;                                                                 //지금 이동중인 목표 x좌표
-
+    bool isAttackingAnim = false;
     //아래는 애니메이션 코드를 작성할때 오타가 날수 있어서 정리한 부분
     static readonly int speedParam = Animator.StringToHash("Speed");
     static readonly int attackTriggerParam = Animator.StringToHash("AttackTrigger");
     static readonly int AttackIndexParam = Animator.StringToHash("AttackIndex");
     static readonly int HitTriggerParam = Animator.StringToHash("HitTrigger");
     static readonly int IsDeadParam = Animator.StringToHash("isDead");
+    static readonly int IsAttackingParam = Animator.StringToHash("isAttacking");
 
     #endregion
 
@@ -67,6 +70,16 @@ public class Skeleton : Enemy
 
         basePosX = transform.position.x;
         patrolTargetX = basePosX + patrolDistance;
+    }
+
+    public void EnableAttackHitbox()
+    {
+        if (attackHitbox != null) attackHitbox.enabled = true;
+    }
+
+    public void DisableAttackHitbox()
+    {
+        if (attackHitbox != null) attackHitbox.enabled = false;
     }
 
     //몬스터 상태 변경
@@ -242,30 +255,28 @@ public class Skeleton : Enemy
         patrolTween = null;
     }
 
+    public void OnAttackAnimationEnd()
+    {
+        isAttackingAnim = false;
+        anim.SetBool(IsAttackingParam, false);
+    }
+
     //공격
     protected override void Attack()
     {
-        if (isDead) return;                                             //죽으면 끝
-        if (currentState != AIState.Attack) return;                         //현재 상태가 공격이 아니면 끝
-        if (Time.time < lastAttackTime + attackCooldown) return;                                        //공격 쿨타임이 해당되지 않으면 끝
+        if (isDead) return;
+        if (currentState != AIState.Attack) return;
+        if (Time.time < lastAttackTime + attackCooldown) return;
+        if (isAttackingAnim) return;
 
-        lastAttackTime = Time.time;                                                                     // 마지막 공격 시간을 현재 시간으로 갱신한다.
-        anim.SetInteger(AttackIndexParam, Random.Range(0, 2));                      // 공격 애니메이션을 랜덤으로 선택한다.
-        anim.SetTrigger(attackTriggerParam);                                                //공격에 트리거를 준다.
+        lastAttackTime = Time.time;
+        isAttackingAnim = true;
+        anim.SetBool(IsAttackingParam, true);
+
+        anim.SetInteger(AttackIndexParam, Random.Range(0, 2)); // 이 줄이 실제로 이 위치에 있는지 확인
+        anim.SetTrigger(attackTriggerParam);
 
         Debug.Log("스켈레톤 공격");
-   
-    }
-
-    //실제 데미지 처리함수
-    public void DealDamage()
-    {
-        if (isDead) return;
-        if (player == null) return;
-        if (Vector2.Distance(transform.position, player.position) > attackRange) return;                        // 애니메이션이 재생되는 동안 플레이어가 공격 범위를 벗어났으면 데미지를 주지 않는다.
-
-        IDamageable damageable = player.GetComponent<IDamageable>();                                            // 플레이어가 데미지를 받을 수 있는지 확인한다.
-        damageable?.TakeDamage(attackPower);                            // 데미지를 입힌다.
     }
 
     protected override float CalculateContactDamage()

@@ -184,6 +184,10 @@ public class PlayerController : MonoBehaviour
         HandleKeyboardInput();
 #endif
     }
+    public void AttackButton()
+    {
+        playerAttack.Attack();
+    }
 
 #if UNITY_EDITOR
     void HandleKeyboardInput()
@@ -194,6 +198,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.RightArrow)) UnPushRightBtn();
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
         if (Input.GetKeyDown(KeyCode.S)) Dash();
+        if (Input.GetKeyDown(KeyCode.A)) AttackButton();
     }
 #endif
 

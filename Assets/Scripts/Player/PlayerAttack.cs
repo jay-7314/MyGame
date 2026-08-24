@@ -1,12 +1,10 @@
 using UnityEngine;
-
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] Collider2D hitboxCollider;
     [SerializeField] int damage = 10;
     [SerializeField] Animator anim;
-
-    private bool isAttacking = false; // 공격 중 중복 입력 방지 (선택)
+    private bool isAttacking = false;
 
     private void Awake()
     {
@@ -23,22 +21,19 @@ public class PlayerAttack : MonoBehaviour
         hitboxCollider.enabled = false;
     }
 
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Attack();
-        }
-#endif
-    }
-
-    // 버튼(OnClick)이나 키보드 입력 양쪽에서 호출 가능한 공용 메서드
     public void Attack()
     {
-        if (isAttacking) return; // 공격 중이면 무시 (선택 사항)
+        if (isAttacking) return; // 공격 중이면 무시
+        isAttacking = true;
+
         int rand = Random.Range(0, 2);
         anim.SetTrigger(rand == 0 ? "Attack" : "Attack1");
+    }
+
+    // 공격 애니메이션의 마지막 프레임에 Animation Event로 이 함수를 호출해줘야 함
+    public void OnAttackAnimationEnd()
+    {
+        isAttacking = false;
     }
 
     public void SetFacing(bool facingLeft)
