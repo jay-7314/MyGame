@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: -3379866751503092912}
   - component: {fileID: 4989657326303206610}
   - component: {fileID: 5845492046027632008}
-  - component: {fileID: 8709330648134436091}
+  - component: {fileID: 2713317979278780429}
   m_Layer: 0
   m_Name: Aren
   m_TagString: Player
@@ -370,7 +370,7 @@ MonoBehaviour:
   hitboxCollider: {fileID: 3372131125836130844}
   damage: 10
   anim: {fileID: 1901373018755930491}
---- !u!114 &8709330648134436091
+--- !u!114 &2713317979278780429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
