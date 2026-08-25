@@ -55,10 +55,11 @@ MonoBehaviour:
     choices: []
     isNextScene: 0
   - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
-    dialogueText: "\uC77C\uB2E8 \uC67C\uCABD \uC544\uB798\uC758 Stage\uAC00 \uAC00\uC7A5
+    dialogueText: "\uC77C\uB2E8 \uAC00\uC6B4\uB300\uC758 Stage\uAC00 \uAC00\uC7A5
       \uAC04\uB2E8\uD55C\uAC70\uB2C8\uAE4C \uC77C\uB2E8 \uADF8\uAC70\uB098 \uB4E4\uC5B4\uAC00\uBD10"
     choices: []
     isNextScene: 0
   requiredFlags: 
   blockedIfFlags: 01000000
+  hideInactiveSpeaker: 0
   priority: 0
