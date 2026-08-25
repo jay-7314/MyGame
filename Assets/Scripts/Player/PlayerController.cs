@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
     Animator anim;
-    CircleCollider2D circleCollider;
+    BoxCollider2D boxCollider;
     PlayerAttack playerAttack;
+    PlayerKnockback playerKnockback;   // 추가: 실제 콜라이더가 붙은 오브젝트의 넉백 상태를 참조
     public Image leftBtn, rightBtn;
     bool moveLeft;
     bool moveRight;
@@ -45,7 +46,8 @@ public class PlayerController : MonoBehaviour
         anim = player.GetComponent<Animator>();
         anim.SetBool("isRun", false);
         playerAttack = player.GetComponent<PlayerAttack>();
-        circleCollider = player.GetComponent<CircleCollider2D>();
+        boxCollider = player.GetComponent<BoxCollider2D>();
+        playerKnockback = player.GetComponent<PlayerKnockback>();   // 추가
         moveLeft = false;
         moveRight = false;
         isJump = false;
@@ -205,6 +207,7 @@ public class PlayerController : MonoBehaviour
     void MovementPlayer()
     {
         if (isDashing) return;
+        if (playerKnockback != null && playerKnockback.IsKnockback) return;   // 넉백 중엔 방향키 입력을 무시
 
         if (moveLeft && !moveRight) horizontalMove = -movespeed;
         else if (moveRight && !moveLeft) horizontalMove = movespeed;
@@ -215,14 +218,16 @@ public class PlayerController : MonoBehaviour
     {
         UpdateDash();
 
-        if (!isDashing)
+        bool isKnockback = playerKnockback != null && playerKnockback.IsKnockback;
+
+        if (!isDashing && !isKnockback)
         {
             rigid.linearVelocity = new Vector2(horizontalMove, rigid.linearVelocity.y);
         }
 
         // 바닥 감지
-        Vector2 boxSize = new Vector2(circleCollider.bounds.size.x * 0.9f, 0.5f);
-        Vector2 boxOrigin = new Vector2(circleCollider.bounds.center.x, circleCollider.bounds.min.y);
+        Vector2 boxSize = new Vector2(boxCollider.bounds.size.x * 0.9f, 0.5f);
+        Vector2 boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
         float castDistance = 0.1f;
 
         RaycastHit2D hit = Physics2D.BoxCast(boxOrigin, boxSize, 0f, Vector2.down, castDistance, layerMask);
