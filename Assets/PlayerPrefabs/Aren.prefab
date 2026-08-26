@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce70714b8e671764288e396860ee1c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 1.5e+12
+  maxHealth: 1.5e+21
   currentHealth: 0
   healthSlider: {fileID: 1534668544470833842}
   anim: {fileID: 1901373018755930491}
@@ -412,9 +412,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerKnockback
   monsterTag: Enemy
-  knockbackDistance: 0.01
-  knockbackDuration: 0.08
+  knockbackDistance: 0.003
+  knockbackDuration: 0.002
   topXThreshold: 3
+  topYThreshold: 0.1
   topPopForce: 3
 --- !u!1 &5233989103966173528
 GameObject:

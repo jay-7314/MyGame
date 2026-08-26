@@ -721,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42fd15823ee02f748a0ea09c45f6021c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skeleton
-  maxHealth: 100
+  maxHealth: 1e+11
   speed: 1
   attackPower: 10
   enemyTalk: 

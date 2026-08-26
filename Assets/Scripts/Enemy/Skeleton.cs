@@ -61,7 +61,7 @@ public class Skeleton : Enemy
     {
         base.Awake();
         rb = GetComponent<Rigidbody2D>();  // Rigidbody2D를 가져온다.
-      
+
     }
 
     protected override void Start()
@@ -93,6 +93,22 @@ public class Skeleton : Enemy
             {
                 lastDebugLogTime = Time.time;
                 Debug.Log($"[Skeleton:{name}] player == null -> State: Patrol");
+            }
+            return;
+        }
+
+        // 공격 모션이 재생 중일 때는 거리와 상관없이 Attack 상태를 유지한다.
+        // (넉백이나 미세한 이동으로 거리가 잠깐 attackRange를 벗어나도
+        //  공격 애니메이션은 끝까지 재생되어야 자연스러움. 이걸 안 막으면
+        //  공격 한번 하자마자 Chase로 튕겨나가는 현상이 생김)
+        if (isAttackingAnim)
+        {
+            currentState = AIState.Attack;
+
+            if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
+            {
+                lastDebugLogTime = Time.time;
+                Debug.Log($"[Skeleton:{name}] 공격 모션 재생중 -> State: Attack 유지");
             }
             return;
         }
@@ -158,6 +174,15 @@ public class Skeleton : Enemy
         if (currentState == AIState.Attack)                 //상태값이 공격이라면
         {
             anim.SetFloat(speedParam, 0f);                  //공격중에는 움직이면 안된다.
+
+            // 공격 모션이 재생 중이 아닐 때(=쿨다운 대기 중)는
+            // 플레이어가 반대편으로 넘어가도 바라보는 방향이 바뀌도록 회전만 갱신.
+            // 공격 애니메이션 재생 중에는 회전시키지 않아야 모션이 안 씹힘.
+            if (!isAttackingAnim && player != null)
+            {
+                float moveDir = player.position.x > transform.position.x ? 1f : -1f;
+                FaceDirection(moveDir);
+            }
             return;
         }
 
