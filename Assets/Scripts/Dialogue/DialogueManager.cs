@@ -215,7 +215,7 @@ public class DialogueManager : MonoBehaviour
         if (choice.isNextScene)
         {
             EndDialogue();
-            GoToNextScene("Map");
+            GoToNextScene("Stage1");
             return;
         }
 
