@@ -84,9 +84,25 @@ Assets/
 단, 위에 명시된 외부 아트 에셋들은 각자의 원 라이선스를 따르며 별도 배포 시 주의가 필요합니다.
 
 ## 게임 스크린샷
-<img width="2440" height="1115" alt="Image" src="https://github.com/user-attachments/assets/9668bb09-4b0d-4e77-8a2d-cbdade764326" />
-게임 intro Scene
+<div align="center">
 
+<img width="2440" height="1115" alt="Game Intro Scene" src="https://github.com/user-attachments/assets/9668bb09-4b0d-4e77-8a2d-cbdade764326" />
 
-<img width="2399" height="1220" alt="Image" src="https://github.com/user-attachments/assets/6829543e-2018-4d6a-be2c-f643fb25566d" />
-게임 전투 Scene
+Intro Scene
+캐릭터 선택 및 게임 시작 화면
+
+<br><br>
+
+<img width="2463" height="1121" alt="Game Dialogue Scene" src="https://github.com/user-attachments/assets/97a66f08-019e-4cb4-bce7-6b374c4a68f4" />
+
+Dialogue Scene
+NPC와의 대화 및 선택지 분기 시스템
+
+<br><br>
+
+<img width="2399" height="1220" alt="Game Combat Scene" src="https://github.com/user-attachments/assets/6829543e-2018-4d6a-be2c-f643fb25566d" />
+
+Combat Scene
+플레이어의 이동, 점프, 대시, 공격을 활용한 전투
+
+</div>
