@@ -198,8 +198,8 @@ TextureImporter:
       name: Death_1
       rect:
         serializedVersion: 2
-        x: 217
-        y: 9
+        x: 220
+        y: 10
         width: 29
         height: 52
       alignment: 0
@@ -221,7 +221,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 369
-        y: 9
+        y: 10
         width: 38
         height: 40
       alignment: 0
@@ -242,7 +242,7 @@ TextureImporter:
       name: Death_3
       rect:
         serializedVersion: 2
-        x: 519
+        x: 521
         y: 9
         width: 38
         height: 40
@@ -264,8 +264,8 @@ TextureImporter:
       name: Death_4
       rect:
         serializedVersion: 2
-        x: 669
-        y: 9
+        x: 670
+        y: 8
         width: 38
         height: 40
       alignment: 0
@@ -286,12 +286,12 @@ TextureImporter:
       name: Death_5
       rect:
         serializedVersion: 2
-        x: 819
+        x: 821
         y: 9
         width: 62
         height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.49, y: 2}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -312,8 +312,8 @@ TextureImporter:
         y: 9
         width: 62
         height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 2.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -331,11 +331,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1119
-        y: 9
+        y: 10
         width: 62
         height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 2.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -352,12 +352,12 @@ TextureImporter:
       name: Death_8
       rect:
         serializedVersion: 2
-        x: 1269
-        y: 9
+        x: 1271
+        y: 10
         width: 62
         height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 2.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -374,12 +374,12 @@ TextureImporter:
       name: Death_9
       rect:
         serializedVersion: 2
-        x: 1419
+        x: 1420
         y: 9
         width: 62
         height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 2.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

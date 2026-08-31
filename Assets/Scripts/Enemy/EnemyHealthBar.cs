@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class EnemyHealthBar : MonoBehaviour
 {
     [SerializeField] Slider slider;
-    [SerializeField] Enemy enemy;   // 인스펙터에서 부모 Skeleton 오브젝트 드래그
+    [SerializeField] Enemy enemy;   
 
     private void Awake()
     {

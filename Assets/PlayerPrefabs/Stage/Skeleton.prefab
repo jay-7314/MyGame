@@ -721,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42fd15823ee02f748a0ea09c45f6021c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skeleton
-  maxHealth: 1e+11
+  maxHealth: 100
   speed: 1
   attackPower: 10
   enemyTalk: 
@@ -735,6 +735,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   dieDestroyDeley: 1
   attackHitbox: {fileID: 7419137330356211217}
+  deathDialogue: {fileID: 11400000, guid: 9c02c3284b4efe448ae9136641d457aa, type: 2}
   debugLog: 1
   debugLogInterval: 0.5
 --- !u!58 &8582398821613383072

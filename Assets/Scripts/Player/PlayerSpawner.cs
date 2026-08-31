@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -7,19 +6,17 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (GameObject.FindWithTag("Player") == null)
+        GameObject player = GameObject.FindWithTag("Player");
+
+        if (player == null)
         {
-            var player = Instantiate(playerPrefabs, transform.position, transform.rotation);
+            player = Instantiate(playerPrefabs, transform.position, transform.rotation);
             DontDestroyOnLoad(player);
         }
-
-        if (SceneManager.GetActiveScene().name == "Map")
+        else
         {
-            GameObject existingPlayer = GameObject.FindWithTag("Player");
-            if (existingPlayer != null)
-            {
-                Destroy(existingPlayer);
-            }
+            player.transform.position = transform.position;
+            player.transform.rotation = transform.rotation;
         }
     }
 }

@@ -5,8 +5,8 @@ using System.Collections;
 
 public class HudHealthBar : MonoBehaviour
 {
-    [SerializeField] Slider slider;              // Bar_MP 자기 자신의 Slider
-    [SerializeField] TextMeshProUGUI healthText;  // "150 / 150" 표시할 텍스트
+    [SerializeField] Slider slider;           
+    [SerializeField] TextMeshProUGUI healthText;  
     PlayerHealth target;
 
     void Awake()
@@ -36,7 +36,7 @@ public class HudHealthBar : MonoBehaviour
         }
 
         target = found;
-        UpdateBar(target.CurrentHealth, target.MaxHealth); // 초기값 반영
+        UpdateBar(target.CurrentHealth, target.MaxHealth); 
         target.OnHealthChanged += UpdateBar;
     }
 

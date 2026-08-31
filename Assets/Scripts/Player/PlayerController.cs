@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     BoxCollider2D boxCollider;
     PlayerAttack playerAttack;
-    PlayerKnockback playerKnockback;   // 추가: 실제 콜라이더가 붙은 오브젝트의 넉백 상태를 참조
+    PlayerKnockback playerKnockback;  
     public Image leftBtn, rightBtn;
     bool moveLeft;
     bool moveRight;
@@ -137,7 +137,6 @@ public class PlayerController : MonoBehaviour
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
 
-        // Animator가 매 프레임 sprite를 덮어쓰지 못하게 잠깐 꺼둠
         anim.enabled = false;
 
         if (dashSpriteImage != null)

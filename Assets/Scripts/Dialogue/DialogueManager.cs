@@ -19,9 +19,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject choicePanel;
     [SerializeField] Button choiceButtonPrefab;
 
-    DialogueData currentDialogueData;                           //현재 대사 데이터
-    int currentIndex;                                                          //현재 대사 인덱스
-    Action onEndCallback;                                                //대사 종료시 호출할 콜백??
+    DialogueData currentDialogueData;                         
+    int currentIndex;                                                    
+    Action onEndCallback;                                                
     public bool isDialogueCheck { get; private set; }
 
 
@@ -62,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         if (currentLine.isNextScene)
         {
             EndDialogue();
-            GoToNextScene("Map"); // 원하시는 씬 이름
+            GoToNextScene("Map");
             return;
         }
 
@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         bool hasImg = line.speaker.speakerImg != null;
         bool isPlayer = line.speaker.speakerType == SpeakerData.SpeakerType.Player;
         bool hideInactive = currentDialogueData.hideInactiveSpeaker;
-        bool isTwoSpeakers = !hideInactive && HasMultiSpeaker(); // hideInactive면 아예 계산 안 해도 됨
+        bool isTwoSpeakers = !hideInactive && HasMultiSpeaker(); 
 
         if (isPlayer)
         {

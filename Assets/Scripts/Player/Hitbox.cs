@@ -15,7 +15,6 @@ public class Hitbox : MonoBehaviour
                 Debug.Log($"{collision.name}에게 데미지 {damage}를 입혔습니다.");
 
             }
-            // 실제 데미지 처리 로직
         }
     }
 }

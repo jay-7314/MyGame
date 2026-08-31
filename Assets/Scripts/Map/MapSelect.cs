@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MapSelect : MonoBehaviour
@@ -8,7 +8,6 @@ public class MapSelect : MonoBehaviour
     public void OnMouseDown()
     {
         SceneManager.LoadScene(stageName.name);
-        Debug.Log("클릭됨");
     }
 
 }

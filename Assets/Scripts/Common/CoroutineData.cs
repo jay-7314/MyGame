@@ -15,11 +15,7 @@ public static class CoroutineData
 
     #endregion
 
-    /// <summary>
-    /// WaitForSeconds 반환 (재사용을 위해 하나의 Dictionary에서 계속 반환해줌)
-    /// </summary>
-    /// <param name="seconds">찾는 시간 초</param>
-    /// <returns></returns>
+   
     public static WaitForSeconds GetWaitForSeconds(float seconds)
     {
         if (DicWaitForSeconds.ContainsKey(seconds) == false)

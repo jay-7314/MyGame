@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         if (isAttacking) return;
-        if (!anim.enabled) return; // 대시 중(Animator 꺼짐)에는 공격 무시
+        if (!anim.enabled) return; 
 
         isAttacking = true;
         int rand = Random.Range(0, 2);
@@ -34,10 +34,9 @@ public class PlayerAttack : MonoBehaviour
     public void OnAttackAnimationEnd()
     {
         isAttacking = false;
-        DisableHitbox(); // 안전장치: 혹시 안 꺼져있으면 여기서도 확실히 끔
+        DisableHitbox();
     }
 
-    // 피격으로 공격이 강제로 끊겼을 때 외부에서 호출해서 플래그를 강제로 풀어줌
     public void ForceCancelAttack()
     {
         isAttacking = false;

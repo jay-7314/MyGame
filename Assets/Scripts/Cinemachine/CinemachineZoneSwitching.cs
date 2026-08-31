@@ -26,7 +26,7 @@ public class CinemachineZoneSwitching : MonoBehaviour
         confiner.BoundingShape2D = targetBoundingShape;
         confiner.InvalidateBoundingShapeCache();
 
-        yield return null; // 한 프레임 대기 후 클램프된 목표 위치 확인
+        yield return null; 
         Vector3 target = vcam.State.RawPosition;
 
         float t = 0f;

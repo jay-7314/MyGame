@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Dialogue_Stage1_ClearSkeleton
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: f5872cd84883ffb4d97d10c3c28c6067, type: 2}
+    dialogueText: "\uCF08\uCF08\uCF08..."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uBD10\uBD10! \uC27D\uAC8C \uC7A1\uC796\uC544!!"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC27D\uAC8C \uC7A1\uB2E4\uB2C8 \uBB54 \uAC1C\uC18C\uB9AC\uC57C!!!
+      \uC5C4\uCCAD \uD798\uB4E4\uC5C8\uAD6C\uB9CC"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC7A1\uC740\uAC74 \uC798\uD588\uACE0, \uC774\uC81C \uB9F5\uC744
+      \uD55C\uBC88 \uB458\uB7EC\uBD10."
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uADF8\uB7FC \uB09C \uB098\uAC08\uC218 \uC5C6\uC5B4? "
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC544\uC9C1\uC740 \uBABB\uB098\uAC00.. \uADF8\uB7F0\uB370 \uC870\uB9CC\uAC04
+      \uB098\uAC00\uAC8C \uD574\uC904\uAC8C~ \uACE0\uC0DD\uD588\uC5B4 \n\uB9F5\uC774\uB77C\uB3C4
+      \uD55C\uBC88 \uAD6C\uACBD\uD574\uBD10"
+    choices: []
+    isNextScene: 0
+  requiredFlags: 
+  blockedIfFlags: 01000000
+  hideInactiveSpeaker: 1
+  priority: 0
