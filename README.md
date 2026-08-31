@@ -27,7 +27,6 @@ Unity(6000.3.8f1) 기반 2D 픽셀 아트 액션 플랫포머 게임입니다.
 | **Cinemachine 연동** | 구역(Zone) 기반 카메라 우선순위 전환 시스템 |
 | **Intro / Character Select** | 캐릭터 선택, 세이브 로드(`LoadPage`), 신규 게임(`NewGame`) 처리 |
 
-전체 스크립트 구조는 [`Assets/Scripts`](Assets/Scripts) 폴더를 참고해 주세요.
 
 ## 📁 폴더 구조
 
