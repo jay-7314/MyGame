@@ -82,3 +82,5 @@ Assets/
 
 이 저장소의 코드는 [MIT License](LICENSE)를 따릅니다.
 단, 위에 명시된 외부 아트 에셋들은 각자의 원 라이선스를 따르며 별도 배포 시 주의가 필요합니다.
+
+<img width="2399" height="1220" alt="Image" src="https://github.com/user-attachments/assets/6829543e-2018-4d6a-be2c-f643fb25566d" />
