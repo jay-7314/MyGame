@@ -1,14 +1,13 @@
-﻿using UnityEngine;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MapSelect : MonoBehaviour
 {
-    [SerializeField] Object stageName;
+    [SerializeField] string stageName;
 
-    public void OnMouseDown()
+    public void GotoNextStage()
     {
-        SceneManager.LoadScene(stageName.name);
-        Debug.Log("클릭됨");
+        SceneManager.LoadScene(stageName);
     }
-
 }
