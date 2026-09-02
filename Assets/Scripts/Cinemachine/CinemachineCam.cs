@@ -8,11 +8,12 @@ public class CinemachineCam : MonoBehaviour
     private void Awake()
     {
         vcam = GetComponent<CinemachineCamera>();
+        FindCine();
     }
 
     private void Start()
     {
-        FindCine();
+        //FindCine();
     }
 
     void FindCine()
@@ -22,6 +23,8 @@ public class CinemachineCam : MonoBehaviour
         {
             vcam.Follow = player.transform;
             vcam.LookAt = player.transform;
+
+            vcam.OnTargetObjectWarped(player.transform, player.transform.position - vcam.transform.position);
         }
     }
 }

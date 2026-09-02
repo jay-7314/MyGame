@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     BoxCollider2D boxCollider;
     PlayerAttack playerAttack;
-    PlayerKnockback playerKnockback;   // 추가: 실제 콜라이더가 붙은 오브젝트의 넉백 상태를 참조
+    PlayerKnockback playerKnockback; 
     public Image leftBtn, rightBtn;
     bool moveLeft;
     bool moveRight;
@@ -32,27 +32,41 @@ public class PlayerController : MonoBehaviour
     private float dashTimer;
     private float dashCooldownTimer;
 
-    [SerializeField] Sprite dashSpriteImage; // Project 창에서 직접 드래그 연결
+    [SerializeField] Sprite dashSpriteImage; 
 
     private float coyoteTimeCounter;
     private float landingBuffer = 0f;
     private float landingBufferTime = 0.1f;
 
+    private bool isInitialized = false;
+
     private void Awake()
     {
+        StartCoroutine(InitWhenPlayerReady());
+    }
+
+    private System.Collections.IEnumerator InitWhenPlayerReady()
+    {
         GameObject player = GameObject.FindWithTag("Player");
+        while (player == null)
+        {
+            yield return null;
+            player = GameObject.FindWithTag("Player");
+        }
+
         rigid = player.GetComponent<Rigidbody2D>();
         sprite = player.GetComponent<SpriteRenderer>();
         anim = player.GetComponent<Animator>();
         anim.SetBool("isRun", false);
         playerAttack = player.GetComponent<PlayerAttack>();
         boxCollider = player.GetComponent<BoxCollider2D>();
-        playerKnockback = player.GetComponent<PlayerKnockback>();   // 추가
+        playerKnockback = player.GetComponent<PlayerKnockback>();   
         moveLeft = false;
         moveRight = false;
         isJump = false;
         leftHeld = false;
         rightHeld = false;
+        isInitialized = true;
     }
 
     #region 이동 및 버튼 색상 변경 구현
@@ -137,7 +151,6 @@ public class PlayerController : MonoBehaviour
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
 
-        // Animator가 매 프레임 sprite를 덮어쓰지 못하게 잠깐 꺼둠
         anim.enabled = false;
 
         if (dashSpriteImage != null)
@@ -168,10 +181,8 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = false;
 
-        // Animator 다시 켜서 원래 스프라이트 제어권 복구
         anim.enabled = true;
 
-        // 대시 끝난 시점의 현재 상태(이동중/정지)에 맞게 애니메이션 복원
         if (moveLeft || moveRight)
             anim.SetBool("isRun", true);
         else
@@ -181,6 +192,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!isInitialized) return;
         MovementPlayer();
 #if UNITY_EDITOR
         HandleKeyboardInput();
@@ -207,7 +219,7 @@ public class PlayerController : MonoBehaviour
     void MovementPlayer()
     {
         if (isDashing) return;
-        if (playerKnockback != null && playerKnockback.IsKnockback) return;   // 넉백 중엔 방향키 입력을 무시
+        if (playerKnockback != null && playerKnockback.IsKnockback) return;   
 
         if (moveLeft && !moveRight) horizontalMove = -movespeed;
         else if (moveRight && !moveLeft) horizontalMove = movespeed;
@@ -216,6 +228,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isInitialized) return;
         UpdateDash();
 
         bool isKnockback = playerKnockback != null && playerKnockback.IsKnockback;
