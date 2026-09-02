@@ -29,6 +29,10 @@ public class PlayerSize : MonoBehaviour
             {
                 transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
             }
+            else if(scene.name == "Stage1")
+            {
+                transform.localScale = new Vector3(2f, 2f, 2f);
+            }
         }
         else
         {
@@ -39,6 +43,10 @@ public class PlayerSize : MonoBehaviour
             else if (scene.name == "Village")
             {
                 transform.localScale = new Vector3(2.2f, 2.2f, 2.2f);
+            }
+            else if (scene.name == "Stage1")
+            {
+                transform.localScale = new Vector3(2f, 2f, 2f);
             }
         }
     }
