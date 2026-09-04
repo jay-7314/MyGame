@@ -53,5 +53,3 @@ MonoBehaviour:
   blockedIfFlags: 
   hideInactiveSpeaker: 1
   priority: 0
-  objectsToActivateOnEnd: {fileID: 0}
-  objectsToDeactivateOnEnd: {fileID: 0}

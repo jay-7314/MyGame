@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using System.Collections;
 
 public class CinemachineCam : MonoBehaviour
 {
@@ -8,23 +9,27 @@ public class CinemachineCam : MonoBehaviour
     private void Awake()
     {
         vcam = GetComponent<CinemachineCamera>();
-        FindCine();
     }
 
     private void Start()
     {
-        //FindCine();
+        StartCoroutine(WaitForPlayerAndFollow());
     }
 
-    void FindCine()
+    IEnumerator WaitForPlayerAndFollow()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            vcam.Follow = player.transform;
-            vcam.LookAt = player.transform;
+        GameObject player = null;
 
-            vcam.OnTargetObjectWarped(player.transform, player.transform.position - vcam.transform.position);
+        // Player가 생성될 때까지 매 프레임 확인
+        while (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+            if (player == null)
+                yield return null;   // 한 프레임 대기 후 다시 시도
         }
+
+        vcam.Follow = player.transform;
+        vcam.LookAt = player.transform;
+        vcam.OnTargetObjectWarped(player.transform, player.transform.position - vcam.transform.position);
     }
 }

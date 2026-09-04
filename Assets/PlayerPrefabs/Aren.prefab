@@ -287,7 +287,7 @@ MonoBehaviour:
     \uC790\uC2E0\uC758 \uC77C\uC740 \uD655\uC2E4\uD788 \uCC98\uB9AC\uD558\uB294 \uBCF4\uAE30\uB4DC\uBB38
     \uD559\uC0DD\n\uBB54\uAC00 \uD56D\uC0C1 \uBD88\uB9CC\uC740 \uB9CE\uC544\uBCF4\uC774\uC9C0\uB9CC,
     \uC54C\uACE0\uBCF4\uBA74 \uCC29\uD55C \uC18C\uB144"
-  myfeature: "\uAE30\uBCF8 \uCCB4\uB825 : 100\n\uAE30\uBCF8 \uC18D\uB3C4 : 100"
+  myfeature: "\uAE30\uBCF8 \uCCB4\uB825 : 150\n\uAE30\uBCF8 \uC18D\uB3C4 : 100"
   newGame: {fileID: 0}
 --- !u!114 &5427269883187134308
 MonoBehaviour:
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce70714b8e671764288e396860ee1c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 1.5e+21
+  maxHealth: 150
   currentHealth: 0
   healthSlider: {fileID: 1534668544470833842}
   anim: {fileID: 1901373018755930491}

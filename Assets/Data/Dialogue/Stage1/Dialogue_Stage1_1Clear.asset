@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856280d1f4a0d84da3d207b42a3841f, type: 3}
+  m_Name: Dialogue_Stage1_1Clear
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  lines:
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC5B4\uD6C4.. \uC8FD\uC744\uBED4\uD588\uB124.. \uC5B4\uB5BB\uAC8C
+      \uC800\uB140\uC11D\uC744 \uC77C\uB2E8 \uC7A1\uAE30\uB294 \uD588\uB124"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 975027ddc50f1ec41aed4395f892cc38, type: 2}
+    dialogueText: "\uC798\uD558\uBA74\uC11C \uBB58 \uADF8\uB798! \uB9C8\uC744\uC5D0\uC11C
+      \uC370\uB358 \uC2E4\uB825\uC740 \uC5B4\uB514 \uC548\uC8FD\uC5C8\uAD6C\uB9CC\n\uC774\uC81C
+      \uC800 \uBCBD\uC744 \uB530\uB77C\uC11C \uB2E4\uC74C\uAD6C\uC5ED\uC73C\uB85C
+      \uAC00\uBCF4\uB77C\uACE0 \u314E\u314E"
+    choices: []
+    isNextScene: 0
+  - speaker: {fileID: 11400000, guid: 9ccbf00547b03df46903e60a1c9b9321, type: 2}
+    dialogueText: "\uC5E5? \uC800\uAC74 \uC548\uBCF4\uC600\uB294\uB370 \uC5B8\uC81C\uC0DD\uAE34\uAC70\uB798?
+      \uBCC4\uAC8C \uB2E4 \uC788\uAD6C\uB9CC\n\uC77C\uB2E8 \uAC00\uBCF4\uB77C\uB294\uAC70\uC9C0?"
+    choices: []
+    isNextScene: 0
+  requiredFlags: 
+  blockedIfFlags: 
+  hideInactiveSpeaker: 1
+  priority: 0

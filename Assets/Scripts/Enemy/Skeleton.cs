@@ -29,6 +29,7 @@ public class Skeleton : Enemy
     [SerializeField] float dieDestroyDeley = 1f;                         //죽는 시간
     [SerializeField] Collider2D attackHitbox;
 
+    [SerializeField] RoomManager roomManager;
 
     // ===== 디버그용 =====
     [Header("Debug")]
@@ -46,6 +47,7 @@ public class Skeleton : Enemy
     Tween patrolTween;                                                              //순찰중인 트윈을 들고있어야 Chase전환시 죽일수있음
     float basePosX;                                                                        //순찰 왕복의 기준이 되는 시작 x좌표
     float patrolTargetX;                                                                 //지금 이동중인 목표 x좌표
+
     bool isAttackingAnim = false;
     //아래는 애니메이션 코드를 작성할때 오타가 날수 있어서 정리한 부분
     static readonly int speedParam = Animator.StringToHash("Speed");
@@ -321,14 +323,16 @@ public class Skeleton : Enemy
         isDead = true;
 
         KillPatrolTween();
-
-        // 물리 이동 완전히 정지 (죽는 도중에도 velocity가 남아있으면 애니메이션이 밀리거나 씹힘)
         anim.SetBool(IsDeadParam, true);
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
+        if (roomManager != null)
+            roomManager.ReportEnemyDeath();
+
         Invoke(nameof(FinishDeath), dieDestroyDeley);
+        Debug.Log("스켈레톤 죽음");
     }
 
     void FinishDeath()
@@ -339,5 +343,10 @@ public class Skeleton : Enemy
     void OnDestroy()
     {
         KillPatrolTween();                                                                              //오브젝트 파괴될때 트윈 남아있으면 에러나니까 정리
+    }
+
+    public void SetRoomManager(RoomManager manager)
+    {
+        roomManager = manager;
     }
 }
