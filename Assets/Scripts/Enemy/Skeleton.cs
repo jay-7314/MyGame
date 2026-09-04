@@ -85,48 +85,38 @@ public class Skeleton : Enemy
     //몬스터 상태 변경
     void UpdateState()
     {
-        if (player == null)              //플레이어가 없다면
+        if (player == null)
         {
-            currentState = AIState.Patrol;          //기본상태인 순찰상태로 돌아간다.
-
-            if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
-            {
-                lastDebugLogTime = Time.time;
-                Debug.Log($"[Skeleton:{name}] player == null -> State: Patrol");
-            }
+            currentState = AIState.Patrol;
             return;
         }
 
-        // 공격 모션이 재생 중일 때는 거리와 상관없이 Attack 상태를 유지한다.
-        // (넉백이나 미세한 이동으로 거리가 잠깐 attackRange를 벗어나도
-        //  공격 애니메이션은 끝까지 재생되어야 자연스러움. 이걸 안 막으면
-        //  공격 한번 하자마자 Chase로 튕겨나가는 현상이 생김)
         if (isAttackingAnim)
         {
             currentState = AIState.Attack;
-
-            if (debugLog && Time.time >= lastDebugLogTime + debugLogInterval)
-            {
-                lastDebugLogTime = Time.time;
-                Debug.Log($"[Skeleton:{name}] 공격 모션 재생중 -> State: Attack 유지");
-            }
             return;
         }
 
-        float dist = Vector2.Distance(transform.position, player.position);             //플레이어와 몬스터와의 거리
+        float dist = Vector2.Distance(transform.position, player.position);
         AIState newState;
 
-        if (dist <= attackRange)                                                                              //공격 범위보다 dist가 작다면
+        // 이미 Attack 상태였다면, 더 넉넉한 범위(chaseRange 이내)까지는 Attack을 유지해서
+        // 몸통충돌로 인한 미세한 거리 변화로 Patrol까지 떨어지는 걸 막는다.
+        if (currentState == AIState.Attack && dist <= chaseRange)
         {
-            newState = AIState.Attack;                                                              //상태값은 공격으로 바꾼다.
+            newState = AIState.Attack;
         }
-        else if (dist <= chaseRange)                                                                         //추적상태의 범위보다 dist가 작다면
+        else if (dist <= attackRange)
         {
-            newState = AIState.Chase;                                                                   //추적상태로 바꾼다.
+            newState = AIState.Attack;
+        }
+        else if (dist <= chaseRange)
+        {
+            newState = AIState.Chase;
         }
         else
         {
-            newState = AIState.Patrol;                                                                          //아무상태가 아니라면 순찰상태로 바꾼다.
+            newState = AIState.Patrol;
         }
 
         currentState = newState;
@@ -171,18 +161,11 @@ public class Skeleton : Enemy
             previousState = currentState;
         }
 
-        if (currentState == AIState.Attack)                 //상태값이 공격이라면
+        if (currentState == AIState.Attack)
         {
-            anim.SetFloat(speedParam, 0f);                  //공격중에는 움직이면 안된다.
-
-            // 공격 모션이 재생 중이 아닐 때(=쿨다운 대기 중)는
-            // 플레이어가 반대편으로 넘어가도 바라보는 방향이 바뀌도록 회전만 갱신.
-            // 공격 애니메이션 재생 중에는 회전시키지 않아야 모션이 안 씹힘.
-            if (!isAttackingAnim && player != null)
-            {
-                float moveDir = player.position.x > transform.position.x ? 1f : -1f;
-                FaceDirection(moveDir);
-            }
+            anim.SetFloat(speedParam, 0f);
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            rb.bodyType = RigidbodyType2D.Kinematic;
             return;
         }
 
@@ -294,11 +277,22 @@ public class Skeleton : Enemy
         if (Time.time < lastAttackTime + attackCooldown) return;
         if (isAttackingAnim) return;
 
+        // 공격 시작 시점에 방향을 한 번만 고정
+        if (player != null)
+        {
+            float xDiff = player.position.x - transform.position.x;
+            if (Mathf.Abs(xDiff) > 0.05f)
+            {
+                float moveDir = xDiff > 0f ? 1f : -1f;
+                FaceDirection(moveDir);
+            }
+        }
+
         lastAttackTime = Time.time;
         isAttackingAnim = true;
         anim.SetBool(IsAttackingParam, true);
 
-        anim.SetInteger(AttackIndexParam, Random.Range(0, 2)); // 이 줄이 실제로 이 위치에 있는지 확인
+        anim.SetInteger(AttackIndexParam, Random.Range(0, 2));
         anim.SetTrigger(attackTriggerParam);
 
         Debug.Log("스켈레톤 공격");

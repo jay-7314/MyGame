@@ -182,6 +182,20 @@ public class DialogueManager : MonoBehaviour
         isDialogueCheck = false;
         talkUI.SetActive(false);
 
+        // 대사 종료 시 지정된 오브젝트 활성/비활성 처리
+        if (currentDialogueData != null)
+        {
+            if (currentDialogueData.objectsToDeactivateOnEnd != null)
+            {
+                currentDialogueData.objectsToDeactivateOnEnd.SetActive(false);
+            }
+
+            if (currentDialogueData.objectsToActivateOnEnd != null)
+            {
+                currentDialogueData.objectsToActivateOnEnd.SetActive(true);
+            }
+        }
+
         Action callback = onEndCallback;
         onEndCallback = null;
         callback?.Invoke();

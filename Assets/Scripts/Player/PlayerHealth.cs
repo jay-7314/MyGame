@@ -6,11 +6,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float currentHealth;
 
-    // ↓↓↓ 외부에서 읽을 수 있도록 프로퍼티 추가
     public float MaxHealth => maxHealth;
     public float CurrentHealth => currentHealth;
 
-    // ↓↓↓ 체력 변경 이벤트 추가 (current, max)
     public event System.Action<float, float> OnHealthChanged;
 
     [Header("UI - 캐릭터 머리 위 체력바 (프리팹 내부)")]
